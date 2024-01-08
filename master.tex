@@ -70,15 +70,16 @@
 \newtheorem{counter}{Counter}[section] % not for use
 \newtheorem{definition}[counter]{Definition}
 \newtheorem{lemma}[counter]{Lemma}
-\newtheorem{conseq}[counter]{Condequence}
+\newtheorem{conseq}[counter]{Consequence}
 \newtheorem{claim}[counter]{Claim}
 \newtheorem{theorem}[counter]{Theorem}
 \newtheorem{example}[counter]{Example}
 \newtheorem{corollary}[counter]{Corollary}
+\newtheorem{proposition}[counter]{Proposition}
 %%
 \theoremstyle{remark}
 \newtheorem*{ex}{Example}
-\newtheorem*{rem}{Remark}
+\newtheorem*{remark}{Remark}
 %\newtheorem*{problem}{Problem}
 \newtheorem{rem*}[counter]{Remark}
 %\newtheorem{ex*}[counter]{Primer}
@@ -1488,7 +1489,283 @@ If $L \in IP$ and $L' \leq_p L$ it is easy to show that $L' \in IP$.
 As a consequence $TQBF \in IP \implies PSPACE \subseteq IP$
 
 
-%\newpage
+
+
+
+
+
+\newpage
+% 8.1.2024
+% nadaljevanje od zadnjic
+Goal of first hour: Complete proof that $IP = PSPACE$.
+
+Last lecture:
+\begin{itemize}
+    \item $IP \subseteq PSPACE$
+    \item To show $PSPACE \subseteq IP$ it suffies to show $TQBF \in IP$
+    \item We showed as a warm-up: $3-SAT \in IP$
+\end{itemize}
+
+\subsection{$TQBF \in IP$}
+We need an IP to convince us of the truth of a formula
+\begin{equation*}
+    Q_1 x_1 \dots Q_n x_n \Psi (x_1, \dots, x_n)
+\end{equation*}
+where $\Psi$ is in 3-CNF.
+
+First idea (as for $3-SAT$) we 'arithmetise' instead of 
+\begin{equation*}
+    \forall x_1 \exists x_2 \forall x_3 \exists x_4 \Psi (x_1, x_2, x_3, x_4)
+\end{equation*}
+(is true iff)
+Consider
+\begin{equation*}
+    \prod_{x_1 \in \{0, 1\}} \sum_{x_2 \in \{0, 1\}} \prod_{x_3 \in \{0, 1\}} \sum_{x_4 \in \{0, 1\}} f_\Psi (x_1, x_2, x_3, x_4)
+\end{equation*}
+$ \neq 0$
+e.g. if $\Psi$ is $(x_1 \lor \neg x_2 \lor x_3) \land (\neg x_1 \lor x_2)$ then
+\begin{equation*}
+    f_\Psi (1 - ((1 - x_1) \cdot x_2 \cdot (1 - x_3))) \cdot (1 - x_1 (1 - x_2))
+\end{equation*}
+
+Issues with using $\sum, \prod$ expansion
+\begin{itemize}
+    \item Result value is bounded by $2^{2^n}$ rather than $2^n$
+    \item the intermediate steps of the protocol involve multiplying polynomials and the degree is not polynomialy bounded.
+\end{itemize}
+
+To address the first problem we replace 
+\begin{equation*}
+    \sum_{b \in \{0, 1\}} a_b
+\end{equation*}
+with
+\begin{equation*}
+   \amalg_{b \in \{0, 1\}} a_b = a_0 + a_1 - a_0 a_1 %(prod mora biti obrnjen na glavo)
+\end{equation*}
+This coincides with disjunction on values $a_b \in \{0, 1\}$.
+
+We change formula from up to this:
+\begin{equation*}
+    \prod_{x_1 \in \{0, 1\}} \amalg_{x_2 \in \{0, 1\}} \prod_{x_3 \in \{0, 1\}} \amalg_{x_4 \in \{0, 1\}} f_\Psi (x_1, x_2, x_3, x_4)
+\end{equation*}
+
+To address the second problem, use the observation for $x \in \{0, 1\}$
+\begin{equation*}
+    x = x^2 = x^3 = x^4 = \dots
+\end{equation*}
+Given a polynomial $f(x_1, \dots, x_n)$
+
+Consider
+\begin{align*}
+    L_i(f) =& x_i \cdot f(x_1, \dots, x_{i-1}, 1, x_{i+1}, \dots, x_n) \\
+           +& (1 - x_i) \cdot f(x_1, \dots, x_{i-1}, 0, x_{i+1}, \dots, x_n)
+\end{align*}
+
+$L_i(f)$ agrees with $f$ on $x_i \in \{0, 1\}$ and is linear in $x_i$, $deg(L_i(f)) \leq deg(f) + 1$.
+The degree of all variables other than $x:i$ is unchanged
+
+Instead, we consider:
+\begin{equation*}
+    \prod_{x_1} L_1 \amalg_{x_2} L_1 L_2 \prod_{x_3} L_1 L_2 L_3 \amalg_{x_4} L_1 L_2 L_3 L_4 f_\Psi(x_1, x_2, x_3, x_4) = 1
+\end{equation*}
+degree is always bounded by $max(3m + n - 1, 2n)$. We get $\mathscr{O}(n^2)$
+
+IP protocol for $Q_1 x_1 \dots Q_n x_n \Psi = 1$
+
+P sends V a large enough prime p (to keep error small)
+
+V verifies that p is prime (else reject)
+asks P to convince it that
+\begin{equation*}
+    \prod_{x_1} L_1 \prod_{x_2} L_1 L_2 \dots \prod_{x_n} L_1 \dots L_n f_\Psi (x_1, \dots, x_n) = 1 %\prod je hkrati prod in amalg  
+\end{equation*}
+This is done using $\frac{n (n + 3)}{2}$ rounds of interaction using protocols for each operator.
+
+\begin{lemma}
+    If we have a polynomial $g(x_1, \dots, x_n)$ of degree $\leq d$ has a k-rounds $\epsilon$-error value checker.
+    Then 
+    \begin{equation*}
+        g_{L_i} (x_1, \dots, x_n) = L_i(g)
+    \end{equation*}
+    has a (k+1)-rounds $(\epsilon + \frac{d}{p})$-error value checker.
+\end{lemma}
+
+\section{Complexity classes}
+Decision problems are represented by functions $\Sigma^* \to \{0, 1\}$.
+
+We have lots of complexity classes for such functions.
+
+Today some complexity classes for more general functions $\Sigma_1^* \to \Sigma_2^*$.
+
+\subsection{FP (Function polytime)}
+A function $f: \Sigma_1^* \to \Sigma_2^*$ is in FP if there exsists a multitape TM M that 
+computes $f$ and a polynomial $p(n)$ such that
+\begin{equation*}
+    \forall w \in \Sigma_1^* time_M(w) \leq p(|w|)
+\end{equation*}
+
+\begin{remark}
+    It follows that $|f(w)| \leq p(|w|)$
+\end{remark}
+
+(We already used this in polytime reducibility.)
+
+\begin{remark}
+    \begin{gather*}
+        f: \N \to \N \\
+        f: \Sigma^* \to \N \\
+        f: \N \to \Sigma^*
+    \end{gather*}
+    are in FP if in FP with respect to binary representation of numbers.
+\end{remark}
+
+\subsection{Counting problems}
+Counting problems provide an interesting class of computationally interesting functions.
+
+\subsubsection{$\#$SAT}
+\begin{equation*}
+    \#SAT: \Sigma_{PROP}^* \to \N
+\end{equation*}
+
+$\#SAT(\Phi) =$ the number of satisfying assignments for $\Phi$.
+
+\subsubsection{$\#$3Col}
+\begin{equation*}
+    \#3Col: \Sigma_{Graph}^* \to \N
+\end{equation*}
+
+$\#3Col(G) =$ the number of 3-colourings of G.
+
+\subsubsection{$\#$P}
+"Sharp P"
+
+A function $f: \Sigma^* \to \N$ belongs to $\#$P if there exsists a deterministic polytime M
+and polynomial p s.t.
+\begin{equation*}
+    f(w) = |\{v \in \Sigma^{p(|w|)} | M(w, v) \text{ accepts}\}|
+\end{equation*}
+
+cf. the certificate def. of NP.
+\begin{equation*}
+    w \in L \iff \exists v \in \Sigma^{p(|w|)} . M(u, v) \text{ accepts}
+\end{equation*}
+
+\begin{remark}
+    Obvious that $\#$SAT $\in$ $\#$P, $\#$3COL $\in$ $\#$P ...
+\end{remark}
+
+Fact: FP $\subseteq$ $\#$P
+
+Proposition: FP = $\#$P $\implies$ P = NP
+
+\begin{proof}
+    Suppose $\#$SAT $\in$ FP. Then we have a P decision procedure for SAT
+
+    Input: $\Phi$
+    Output: $\#$SAT($\Phi$) $\neq 0$
+
+    It is atleast as hard to count certificates as is it to check if a certificate exsists.
+
+    More interesting:
+    sometimes it is strictly harder to count certificates then to check if a certificate exsists. (assuming p $\neq$ NP)
+\end{proof}
+
+Input is a directed graph G.
+
+The decision problem CYCLE:
+\begin{itemize}
+    \item does G have a (directed) cycle?
+\end{itemize}
+
+The counting problem $\#$CYCLE:
+\begin{itemize}
+    \item $\#$CYCLE(G) = the number of simple cycles in G.
+\end{itemize}
+
+(a simple directed cycle of length $n$ is a sequence $v_0 \to v_1 \to ... \to v_{n-1} \to v_0$ in which no vertex appears twice)
+
+\begin{proposition}
+    \begin{enumerate}
+        \item CYCLE $\in$ P
+        \item If $\#$CYCLE $\in$ FP then P = NP
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \begin{enumerate}
+        \item By depth-first search
+        \item We prove that if $\#$CYCLE $\in$ FP then HAM $\in$ $P$
+        Since HAM is NP-complete, P = NP.
+
+        Suppose we have an FP algorithm for $\#$CYCLE. We'll define a P procedure for HAM.
+
+        Let G with $n$ vertices be an input graph. Construct a graph G' by replacing every vertex $w$ in G with the following gadget:
+
+        % (slikca)
+
+        Resulting graph has $2n(n \lceil log_2 n \rceil + 1)$ vertices.
+
+        Important fact: There are $m = 2^{n \lceil log_2 n \rceil}$ paths from $u$ to $v$ in G'.
+
+        So for each cycle of length $l$ in G there are $2^{ml}$ corresponding cycles in G'.
+        (Relies on cycles being identified up to rotation equivalence.) 
+
+        A Hamiltonian cycle in G is a simple cycle of length n.
+
+        If G has a Hamiltonian cycle then G' has at least $2^{n^2 \lceil log_2 n \rceil}$ simple cycles.
+
+        If G does not have a Ham. cycle, then G has at most $n^{n-1}$ simple cycles.
+
+        So G' has at most $n^{n-1} \cdot 2^{m (n-1)}$ simple cycles.
+
+        \begin{align*}
+            n^{n-1} \cdot 2^{m (n-1)} =& n^{n-1} \cdot 2^{n \lceil log_2 n \rceil (n-1)} \\
+                                      =& n^{n-1} \bar{n}^{n (n - 1)}
+                                      \leq& \bar{n}^{(n-1) + n (n-1)}
+                                      =& \bar{n}^{n^2 - 1}
+                                      <& \bar{n}^{n^2}
+                                      =& 2^{n^2 \lceil log_2 n \rceil} 
+        \end{align*}
+
+        Decide "G has a Hamiltonian cycle" by:
+        \begin{equation*}
+            \#CYCLE(G') \geq 2^{n^2 \lceil log_2 n \rceil} 
+        \end{equation*}
+    \end{enumerate}
+\end{proof}
+
+Given a function $f: \Sigma^* \to \Sigma^*$
+
+A deterministic TM with an oracle for f is a TM with an additional tape (the oracle tape) and a more general transition (partial) function
+\begin{equation*}
+    \delta: Q + \Gamma^{k+1} \to Q((\Gamma^{k+1} \times \{-1, 0, 1\}^{k+1}) \cup \{call-f\}) % cup = distort union
+\end{equation*}
+a transition $(q, a_1, \dots, a_{k+1}) \to (q', call-f)$
+change the state to q' and replace the word $w$ on the oracle tape with the word $f(w)$.
+
+A function $g: \Sigma_1^* \to \Sigma_2^*$ is in $FP^f$ if there exists an oracle TM 
+that computes g in polynomial time.
+
+\begin{lemma}
+    If $f \in FP$ and $g \in FP^f$. Then $g \in FP$.
+\end{lemma}
+
+A function $f$ is $\#$P-hard if, for every $g \in \#P, g \in FP^f$.
+
+$f$ is $\#$P-complete if $f \in \#P$ and $f$ is $\#$P-hard.
+
+\begin{theorem}
+    $\#$SAT is $\#$P-complete.
+\end{theorem}
+
+
+
+
+
+
+
+
+
 
 
 \end{document}
