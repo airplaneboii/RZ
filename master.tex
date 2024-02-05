@@ -1763,6 +1763,165 @@ $f$ is $\#$P-complete if $f \in \#P$ and $f$ is $\#$P-hard.
 
 
 
+\newpage
+% 15. 1. 2024
+Its not that much material for today.
+\section{Synthesis based on the permanent}
+
+\subsection*{Reminder}
+If $A$ is an $(n \times n)$-matrix
+\begin{gather*}
+    det(A) = \sum_{\sigma \in perm(n)} \prod_{i = 1}^{n} sgn(\sigma) \cdot A_{i, \sigma(i)} \\
+    perm(A) = \sum_{\sigma \in perm(n)} \prod_{i = 1}^{n} A_{i, \sigma(i)}
+\end{gather*}
+
+det(A) is important in linear algebra, while perm(A) is important in combinatorics.
+
+The permanent of a $\{0, 1\}$-matrix counts the number of perfect matchings in the bipartite graph whose bipartite-adjacency matrix is A.
+
+(Bipartite-adjacency matrix shows vertices of one side as rows and vertices of other as columns.)
+
+A perfect matching is a collection of edges such that each vertex has exactly one edge in the collection.
+
+The determinant and perminant are both downwards self-recuvible, i.e. they can be computed in polynomial time
+given an oracle solving smaller instances.
+
+\begin{equation*}
+    det(\begin{bmatrix}
+        3 & 1 & 4 \\
+        1 & 5 & 4 \\
+        2 & 6 & 5
+    \end{bmatrix})
+    =
+    3 \cdot det(\begin{bmatrix}
+        5 & 9 \\
+        6 & 5
+    \end{bmatrix}) 
+    - 1 \cdot det(\begin{bmatrix}
+        1 & 9 \\
+        2 & 5
+    \end{bmatrix})
+    + 4 \cdot det(\begin{bmatrix}
+        1 & 5 \\
+        2 & 6
+    \end{bmatrix})
+\end{equation*}
+
+\begin{equation*}
+    perm(\begin{bmatrix}
+        3 & 1 & 4 \\
+        1 & 5 & 4 \\
+        2 & 6 & 5
+    \end{bmatrix})
+    =
+    3 \cdot perm(\begin{bmatrix}
+        5 & 9 \\
+        6 & 5
+    \end{bmatrix}) 
+    + 1 \cdot perm(\begin{bmatrix}
+        1 & 9 \\
+        2 & 5
+    \end{bmatrix})
+    + 4 \cdot perm(\begin{bmatrix}
+        1 & 5 \\
+        2 & 6
+    \end{bmatrix})
+\end{equation*}
+
+Downwards self reduciblility doesnt provide a polytime algorithm. But it is useful in giving IP for the permanent.
+
+Determinant is polynomial time reducible using Gaussian elimination.
+
+I.e. $Det \in FP$
+
+In contrast.
+
+\begin{theorem}
+    Computing the permanent of a $\{0, 1\}$-matrix is $\#$P-complete.
+\end{theorem}
+
+The decision problem: does a perfect matching exist is in P.
+The counting problem: how many perfect matchings are there is $\#$P-complete.
+The decision problem: given $B$ and $N$ does $B$ have $N$ perfect matchings is in PSPACE and has a nice IP.
+
+If perm is in FP then P = NP.
+
+\begin{theorem}
+    (Toda)
+    PH (polynomial heirarchy) $\subseteq$ $P^{\#P}$
+\end{theorem}
+
+\begin{corollary}
+    If $perm \in FP$ then $PH = P$.
+\end{corollary}
+
+\begin{theorem}
+    (Lipton)
+    Random self-reducibility of perm.
+
+    Suppose we have an oracle that computes $perm$ correctly on a $(1 - \frac{1}{3n})$ 
+    fraction of all $(n \times n)$ matrices over a finite field $F$ with $|F| > 3n$.
+    Then we can compute $perm$ in polytime (using oracle) on all $(n \times n)$-matrices 
+    by a probabilistic algorithmthat, for any input matrix, returns the correct result with 
+    probability $\geq \frac{2}{3} - \frac{1}{3n}$.
+\end{theorem}
+
+The modern version replaces $(1 - \frac{1}{3n})$  with any constant $c > \frac{1}{2}$.
+
+\begin{proof}
+    Let $A$ be the input matrix. Choose (uniformly) a random matrix $R \in F^{n \times n}$.
+    Define $B(x) = A - x \cdot R$. Then:
+    \begin{itemize}
+        \item $Perm(B(x))$ is a degree $n$ univariate polynomial
+        \item For any $a \neq 0$, $B(a)$ is random, hence the oracle computes $perm(B(a))$ 
+        correctly with probability $\geq 1 - \frac{1}{3n}$.
+
+        Choose $n + 1$ distinct values $a_1, \dots, a_{n + 1}$. Use the oracle $(n + 1)$ times on inputs $B(a_1), \dots, B(a_{n+1})$
+        to get values $p_1, \dots, p_{n+1}$. So with probability $\geq 1 - \frac{n + 1}{3n} = \frac{2}{3} - \frac{1}{3n}$ all values
+        of $p_i = perm(B_(a_i))$.
+
+        Find (using interpolation) the unique degree $n$ polynomial $q(x)$ that enjoys $q(a_i) = p_1, \dots, q(a_{n + 1}) = p_{n + 1}$.
+        Return $q(0)$, which $= perm(A)$ in the case that al $p_i = perm(B(a_i))$.
+    \end{itemize}
+\end{proof}
+
+`I find my daughters mathematics really difficult. I wish they did some proofs.'
+
+If we have an algorithm $M$ for $perm$
+\begin{equation*}
+    Avgtime(n) = E_{A \in F^{(n \times n)}} (\text{time taken by M on matrix A})
+\end{equation*}
+
+If Avgtime(n) is $\mathscr{O}(p(n))$ (p a polynomial) then there exsists a ptime 
+algorithm that correctly computes the permanent on a $\frac{2}{3}$ fraction of all inputs. 
+
+Then by (modern version of theorem) $perm \in P$.
+
+Run the algorithm with polynomial $p(n)$ expected time for at most $4 p(n)$ steps. 
+And if it still hasn't stopped return 0.
+
+The above algorithm is correct on $> \frac{2}{3}$ fraction of inputs.
+
+\begin{theorem}
+    (Jerrum, Sinclair, Vigoda 2004) Approximating the permanent
+
+    There exists a probabilistic algorithm what given an $(n \times n)$-matrix $A \in \N^{n \times n}$ 
+    and $\epsilon, \delta$ satisfies 
+    \begin{equation*}
+        Pr [\frac{|\text{result algorithm } - perm(A)}{perm(A)} < \epsilon] \geq 1 - \delta
+    \end{equation*}
+
+    whose computation time is polynomial in $n$, $log(\delta^{-1})$, $\epsilon^{-1}$.
+
+    Caveats:
+    \begin{itemize}
+        \item the result is for non-negative matrices
+        \item polynomial in $\epsilon^{-1}$ is not really very good ($(log \epsilon^{-1})$ would be better)
+        \item the hidden constants and order of the polynomial are large.
+    \end{itemize}
+\end{theorem}
+
+
 
 
 
