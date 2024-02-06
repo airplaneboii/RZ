@@ -751,6 +751,7 @@ Given a cojnunction of 3-clauses $\phi$. Convert it to a graph that is 3-coloura
 Suppose $\phi$ has variables up to $u_k$.
 
 \begin{proof}(that SAT is NP hard)
+
     Suppose $L \in NP$. We show $L \leq_p SAT$.
 
     Let M be a single-tape ND TM that decides L with time bound $p(n) \geq time_M(n)$. (p a polynomial).
@@ -798,51 +799,62 @@ Suppose $\phi$ has variables up to $u_k$.
 
 $L \in \text{DTime}(T(n))$:
 \begin{equation*}
-    \exists \text{deterministic TM M that decides out such that } time_M(n) = \mathscr{O}(T(n))
+    \exists \text{ deterministic TM M that decides out such that } time_M(n) = \mathscr{O}(T(n))
 \end{equation*}
 
 $L \in \text{NTime}(T(n))$: 
 \begin{equation*}
-    \exists \text{nondeterministic TM M that decides out such that } time_M(n) = \mathscr{O}(T(n))
+    \exists \text{ nondeterministic TM M that decides out such that } time_M(n) = \mathscr{O}(T(n))
 \end{equation*}
 
 \begin{equation*}
-    P := \cup_{\Pp: \N \to \N \text{ (polynomial)}} DTime(p(n))
+    P := \bigcup\limits_{\Pp: \N \to \N \text{ (polynomial)}} DTime(p(n))
 \end{equation*}
 
 
 \begin{equation*}
-    NP := \cup_{\Pp: \N \to \N \text{ (polynomial)}} NTime(p(n))
+    NP := \bigcup\limits_{\Pp: \N \to \N \text{ (polynomial)}} NTime(p(n))
 \end{equation*}
 
-Proposition: P is closed unter complement.
+Proposition: P is closed under complement.
 
-If $L \in P$ then $\neg \text{L} \in P$, $\neg \text{L} = \Sigma^* \setminus L$
+If $L \in P$ then $\overline{\text{L}} \in P$, $\overline{\text{L}} = \Sigma^* \setminus L$
 
-Proof: Switch the accept and reject staes.
+Proof: Switch the accept and reject states.
 
 (Open)Question: Is NP closed under complement? (It is not known if $\neg SAT \in NP$)
 
 The same proof does not work, because of the quantification over runs in how a nondeterministic machine decides a language.
 
-coNP: $\{ L^{\complement} | L \in NP\}$
+\begin{equation*}
+    coNP \; := \{ \overline{\text{L}} | L \in NP\}
+\end{equation*}
 
 What is a complement of SAT?
 
-
 UNSAT = $\{\Phi | \Phi \text{ is an unsatisfiable prop formula}\}$
 
-$\complement$ SAT = UNSAT $\cup +$ the set of all words that are not ... of formulas. (Junk)
+$\overline{\text{SAT}}$ = UNSAT $\cup +$ the set of all words that are not ... of formulas. (Junk) % Help če kdo ve kaj je to
 
 UNSAT $\in$ coNP! UNSAT is a coNP-complete problem.
 
 coUNSAT = SAT U Junk
 
-(slikca)
+Known inclusions:
 
-It si not known if any of the above includes are strict. We dont know is SAT $\in$ coNP and UNSAT $\in$ NP.
+\begin{tikzpicture}
+    \node (P) at (1,0) {$P$};
+    \node (NPcoNP) at (4,0) {$NP \cap coNP$};
+    \node (NP) [above right=0.20cm and 0.3cm of NPcoNP] {NP};
+    \node (coNP) [below right=0.20cm and 0.3cm of NPcoNP] {coNP};
+    \node at ($(P)!0.5!(NPcoNP)$) {$\subseteq$};
+    \node[rotate=30] at ($(NPcoNP)!0.5!(NP)$) {$\subseteq$};
+    \node[rotate=-30] at ($(NPcoNP)!0.5!(coNP)$) {$\subseteq$};
+\end{tikzpicture}
 
-THe problem of determining the winner of a parity game is in NP $\cap$ coNP, but not known to be in P.
+It si not known if any of the above includes are strict. We dont know if SAT $\in$ coNP and UNSAT $\in$ NP.
+
+The problem of determining the winner of a parity game is in NP $\cap$ coNP, but not known to be in P.
 
 \subsection{Space complexity}
 
@@ -850,31 +862,43 @@ Measure how much working space a TM needs to use (not including space taken by t
 
 Assume TMs have a separate input tape with a read-only head and K working tapes with read-write heads.
 
-$\text{SPACE}_M$(n) = max{total number of spaces vidited by working tape heads on  run r | $w \in \Sigma^*. |w| = n$, e is a run of M on input w}
+$\text{SPACE}_M(n) = \max\{ \text{total number of spaces vidited by working tape heads on run } r | \\ 
+w \in \Sigma^*, |w| = n, e \text{ is a run of M on input } w\}$
 
-$L \in DSPACE(T(n))$: deterministic TM M that decides for language such that 
+$L \in DSpace(T(n))$: deterministic TM M that decides for language such that 
 \begin{equation*}
     space_M (n) = O(T(n))
 \end{equation*}
 
-$L \in NSPACE(T(n))$: nondeterministic TM M that decides for language such that
+$L \in NSpace(T(n))$: nondeterministic TM M that decides for language such that
 \begin{equation*}
     space_M (n) = O(T(n))
 \end{equation*}
 
-PSPACE
+\begin{equation*}
+    PSPACE = \bigcup_{\substack{\Pp: \N \to \N \\ \text{(polynomial)}}} DSpace(p(n))
+\end{equation*}
 
-NPSPACE
+\begin{equation*}
+    NPSPACE = \bigcup_{\substack{\Pp: \N \to \N \\ \text{(polynomial)}}} NSpace(p(n))
+\end{equation*}
 
-L = DSPACE(Log(n)) logaritmic space
-NP = NSPACE(Log(n)) nondeterministic logaritmic space
+Logaritmic space:
+\begin{equation*}
+    L = DSPACE(Log(n))
+\end{equation*}
+
+Nondeterministic logaritmic space:
+\begin{equation*}
+    NP = NSPACE(Log(n))
+\end{equation*}
 
 
 Proposition: NP $\subseteq$ PSPACE
 
 \begin{proof}
-    Suppose $L \in NP$. By the certificate characterisation of NP there exists a deterministic ptime TM M
-    and a polynomial $p(n): \N \to \N$, s.t. w $\in$ L $\equiv \exists v \Sigma^{p(n)}$ M accepts w.v.
+    Suppose $L \in NP$. By the certificate characterisation of NP there exists a deterministic PTime TM M
+    and a polynomial $p(n): \N \to \N$, s.t. $w \in L \iff \exists v \Sigma^{p(n)}$ M accepts w.v.
 
     We adapt M to a deterministic polyspace TM for L.
 
@@ -885,10 +909,13 @@ Proposition: NP $\subseteq$ PSPACE
     Takes exponential time but only polynomial space.
 \end{proof}
 
+\begin{equation*}
+    EXP = \bigcup_{\substack{\Pp: \N \to \N \\ \text{(polynomial)}}} DTime(2^{p(n)})
+\end{equation*}
 
-
-$EXP = Union DTIME(2^{p(n)})$
-$NEXP = Union NTIME(2^{p(n)})$
+\begin{equation*}
+    NEXP = \bigcup_{\substack{\Pp: \N \to \N \\ \text{(polynomial)}}} NTime(2^{p(n)})
+\end{equation*}
 
 
 \begin{theorem}
@@ -900,6 +927,21 @@ $NEXP = Union NTIME(2^{p(n)})$
     There are only exponentially many such configurations. Using exponential time we can search the graph of configurations to see
     if there is a path to an accepting state.
 \end{proof}
+
+We now have:
+\begin{equation*}
+    L \subseteq NL \subseteq P \subseteq NP \subseteq PSPACE \subseteq EXP \subseteq NEXP
+\end{equation*}
+
+The only inclusions known to be struct are:
+\begin{equation*}
+    L \subset PSPACE \text{ and } P \subset EXP
+\end{equation*}
+
+The only known to be not strict is:
+\begin{equation*}
+    PSPACE = NPSPACE
+\end{equation*}
 
 EXP $\subseteq$ NEXP is not known to be strict. In fact:
 
@@ -925,6 +967,10 @@ EXP $\subseteq$ NEXP is not known to be strict. In fact:
     $= \mathscr{O}(2^{poly(|w|)})$
 \end{proof}
 
+
+
+
+
 \newpage
 % 13.11.2023
 \section{PSPACE Completeness}
@@ -942,25 +988,26 @@ A quantified boolean formula is:
 \begin{itemize}
     \item a boolean variable: $u, b, \dots$
     \item a boolean constant: 0 (false), 1 (true)
-    \item if $\Phi, \Psi$ are quantified boolean formulas, then so are: $\Phi \cup \Psi, \Phi \cap \Psi, \neg \Phi$
+    \item if $\Phi, \Psi$ are quantified boolean formulas, then so are: $\Phi \lor \Psi, \Phi \land \Psi, \neg \Phi$
 \end{itemize}
 
-Every propositional formula is abf (with no quantifiers).
+Every propositional formula is a qbf (with no quantifiers).
 
 If $\Phi$ is a propositional formula with variables $u_1, \dots, u_k$, then 
 \begin{itemize}
-    \item $\exists u_1 \dots \exists u_k \Phi$ is true iff $\Phi$ is satisfiable.
-    \item $\forall u_1 \dots \forall u_k \Phi$ is true iff $\Phi$ is a tautology (valid).
+    \item $\exists u_1 \dots \exists u_k \Phi$ is true $\iff$ $\Phi$ is satisfiable.
+    \item $\forall u_1 \dots \forall u_k \Phi$ is true $\iff$ $\Phi$ is a tautology (valid).
 \end{itemize}
 
-A variable in a abf is free if it does not accur inside the scope of a quantifier.
+A variable in a qbf is free if it does not accur inside the scope of a quantifier.
 bound otherwise.
 
-A abf $\Phi$ is closed if it has no free variables.
-A closed abf has a determined truth value.
+A qbf $\Phi$ is closed if it has no free variables.
+A closed qbf has a determined truth value.
 
 \subsection{TQBF problem}
-Input: a closed abf $\Phi$
+Input: a closed qbf $\Phi$
+
 Question: Is $\Phi$ true?
 
 As a language
@@ -971,8 +1018,8 @@ As a language
 Proposition: TQBF $\in$ PSPACE
 
 Proof idea illustrated using one example.
-Input: $\forall u \exists v (u \cap v) \cup (\neg u \cap \neg v)$
 
+Input: $\forall u \exists v (u \cap v) \cup (\neg u \cap \neg v)$
 
 L is PSPACE hard, if for every PSPACE language $L'$ $L' \leq_p L$.
 L is NPSPACE hard, if for every NPSPACE language $L'$ $L' \leq_p L$.
@@ -992,7 +1039,7 @@ Corollary: PSPACE = NPSPACE
 
 Suppose $L$ is decided by a nondeterministic TM M where space is bounded by $p(n)$ polynomial.
 
-For convenience assume that the machine M loops on the accept, and only ever accepts aftr erasing all data on the working tapes and reset head positions.
+For convenience assume that the machine M loops on the accept, and only ever accepts after erasing all data on the working tapes and reset head positions.
 
 We define the configuration graph of M run on an input word w. Vertices are configurations:
 \begin{itemize}
@@ -1008,15 +1055,17 @@ The edges in the graph $c \to c'$ if M can make one step of computation from con
 We construct a propositional formula $\Phi_{M, w}(u_1, \dots, u_N, v_1, \dots, v_N)$, where $N = a \cdot p(|w|)$ such that
 \begin{itemize}
     \item The size of $\Phi_{M, w}$ is $\mathscr{O}(n)$.
-    \item For a->, b-> $\in \{0, 1\}^N$ \dots (prepiši)
+    \item For \overrightarrow{a}, \overrightarrow{b} $\in \{0, 1\}^N$ \dots
+    
+    $\Phi_{M, w}(\overrightarrow{a}, \overrightarrow{b}) = 1 \iff \overrightarrow{a} = \ulcorner c \urcorner$ and $\overrightarrow{b} = \ulcorner c' \urcorner$ for 2 node $c, c'$ in the configuration graph and $c \to c'$.
 \end{itemize}
 
-The formula $\Phi_{M, w}$ is defined in an analogous why to the formula constructed in the proof of Cook.Levin theorem
+The formula $\Phi_{M, w}$ is defined in an analogous why to the formula constructed in the proof of Cook-Levin theorem.
 
 We construct qbformulas $\Psi_i (u_1, \dots, u_N, v_1, \dots, v_N)$. Satisfying
 \begin{itemize}
     \item The size of $\Psi_i$ is polynomial in N.
-    \item For $c, c+$ in the config graph $\Psi(\ulcorner c \urcorner, \ulcorner c'\urcorner) = 1 \equiv $ there is a directed path of length $2^i$ from $c$ to $c'$.
+    \item For $c, c'$ in the config graph $\Psi(\ulcorner c \urcorner, \ulcorner c'\urcorner) = 1 \iff $ there is a directed path of length $2^i$ from $c$ to $c'$.
 \end{itemize}
 
 Given this we are done, because the required ptime reduction from $L$ to TQBF is:
@@ -1047,7 +1096,7 @@ Recall:
 
 Two examples in L
 \begin{gather*}
-    DIV3 = \{w \in \{0, 1\}^* | \exists n \in \N w = bin(n) \text{ and } 3|n\} \\
+    DIV3 = \{w \in \{0, 1\}^* | \exists n \in \N \; w = bin(n) \text{ and } 3|n\} \\
     MULT = \{bin(m), bin(n), bin(l) | m, n, l \in \N \text{ and } m \cdot n = l\}
 \end{gather*}
 
@@ -1056,9 +1105,10 @@ Input: A directed graph $G$ and two vertices $s, t \in G$.
 Question: Is there a directed path from $s$ to $t$?
 
 As a language
-\begin{equation*}
-    PATH = \{(G', s', t') | \text{G is a graph given as a adjacent matrix G', s' the binary representation of vertex s, t' the binary representation of vertex t}\}
-\end{equation*}
+\begin{gather*}
+    PATH = \{(G', s', t') | \text{G is a graph given as a adjacent matrix } G', s' \\
+    \text{ the binary representation of vertex s, t' the binary representation of vertex t}\}
+\end{gather*}
 
 For a graph G with k vertices such a truple has size $\mathscr{O}(k^2)$.
 
@@ -1066,21 +1116,28 @@ Vertices are represented by words of size $\mathscr{O}(log k)$. This is also $\m
 
 Proposition: PATH $\in$ NL.
 
-Proof: Observation: If there is a path from $s$ to $t$ in $G$ with $k$ vertices, then there is a path of length $ \leq k$.
+\begin{proof}
+    Observation: If there is a path from $s$ to $t$ in $G$ with $k$ vertices, then there is a path of length $ \leq k$.
 
-Algorithm (nondeterministic):
-Use two working tapes (A and B).
-Start of algorithm given input G', s', t' 
-Write s' on tape A and bin(1) on tape B.
+    Algorithm (nondeterministic):
+    \begin{itemize}
+        \item Use two working tapes (A and B).
+        \item Start of algorithm given input G', s', t' 
+        \item Write s' on tape A and bin(1) on tape B.
+    \end{itemize}
 
-*: At every successible step check tape A to see if t' is on tape A => if so accept.
-Check tape B to see if bin(k) (no. of vertices in G) is on B => if so accept.
-Otherwise consider the vertex v qith bin(v) on tape (A).
-nondeterministically choose a vertex v' s.t. v->v' in G. Write w'' on tape A. increment counter on tape B. Go back to *
+    *: At every successible step check tape A to see if t' is on tape A => if so accept.
 
-We have PATH $\in$ NL.
+    Check tape B to see if $bin(k)$ (no. of vertices in G) is on B => if so accept.
 
-Er eill show PATH is NL-hard. Hence. PATH is NL-complete.
+    Otherwise consider the vertex v with $bin(v)$ on tape (A).
+
+    Nondeterministically choose a vertex $v'$ s.t. $v \to v'$ in G. Write $w''$ on tape A. increment counter on tape B. Go back to *
+
+    We have PATH $\in$ NL.
+
+    We will show PATH is NL-hard. Hence, PATH is NL-complete.
+\end{proof}
 
 L is NL-hard if for every NL language L', we have a deterministic logarithmic space reduction from L' to L.
 
@@ -1120,10 +1177,19 @@ Notation:
     This reduction is only logarithmic space by the following algorithm:
     Construct the adjacency matrix of G by a nested for loop.
 
-    for $i \in \{0, 1\}^{a \cdot log |w|}$
-        for $j \in \{0, 1\}^{a \cdot log |w|}$
-            add 1 to the accept tape if i = c' and j = c' and c -> c' for configurations c, c'
-            put 0 otherwise
+    \begin{algorithm}[H]
+        \begin{algorithmic}[1]
+            \For{$i \in \{0, 1\}^{a \cdot \log |w|}$}
+                \For{$j \in \{0, 1\}^{a \cdot \log |w|}$}
+                    \If{$i = c'$ and $j = c'$ and $c \rightarrow c'$}
+                        \State add 1 to the accept tape
+                    \Else
+                        \State put 0 otherwise
+                    \EndIf
+                \EndFor
+            \EndFor
+        \end{algorithmic}
+        \end{algorithm}
 \end{proof}
 
 
@@ -1155,8 +1221,8 @@ A probabilistic TM is specified by $(Q, \Gamma, \Delta)$, exactly the same data 
 (how we run the machine).
 \begin{itemize}
     \item Start in the start state
-    \item Whenever the machine is in a configuration $(q, t, h)$ and there are $K$ possible successor transitions to (), the machine chooses
-    one of these successors with uniform probability $\frac{1}{k}$
+    \item Whenever the machine is in a configuration $(q, t, h)$ and there are $K$ possible transitions to $K$ potential successor configurations, the machine chooses
+    one of these successors with uniform probability $\frac{1}{k}$.
 \end{itemize}
 
 When the machine is executed on an input word $w$ we either get
@@ -1165,10 +1231,11 @@ When the machine is executed on an input word $w$ we either get
     \item an infinite run $c_1 \to c_2 \to \dots$ that never reaches a terminal configuration (might happen with positive probability, or might happen with probability $0$)
 \end{itemize}
 
-If M is a PTM
+If M is a PTM:
+
 Worst-case time: ($\equiv$ time for M as a NTM)
 \begin{equation*}
-    wtime_M(n) = max \{\text{no. steps in the run r | r is a run of M on input w,} |w| = n\}
+    wtime_M(n) = \max \{\text{no. steps in the run r | r is a run of M on input w,} |w| = n\}
 \end{equation*}
 This is not appropriate for probabilistic computation.
 
@@ -1177,67 +1244,87 @@ More relevant is Expected time:
     xtime_M(N) = max \{E[\text{number of steps in a run } r \text{ of } M \text{ on } w]| |w| = n\}
 \end{equation*}
 
-Example 1: Finding the k-th smallest element in an unsorted array.
-Input: n numbers, k
-Output: find the k-th smallest $a_i$, ie the $k-th$ element if we sort $a_1, \dots, a_n$
+\begin{example}
+    Finding the k-th smallest element in an unsorted array.
 
-An easy algorithm: sort the array, then select the k-th element from the array. Time complexity is $\mathscr{O}(n)$
-A probabilistic algorithm with expected time $O(n)$.
+    Input: n numbers, k
 
-A recursive probabilistic algorithm Find (k; $a_1, \dots, a_n$)
-\begin{itemize}
-    \item Randomly choose $i \in \{1, \dots, n\}$
-    \item Go through $a_1, \dots, a_n$ in turn and we return a permutation of $a_1, \dots, a_n$ of the form 
-    $b_1, \dots, b_l, c_{l+1}, \dots, c_m, d_{m+1}, \dots, d_n$ where $0 \leq l < m \leq n$
-    \item if $l + 1 \leq k \leq m$ return $a_i$
-    \item if $k \leq k$ recursively compute Find ($k$; $b_1, \dots, b_l$)
-    \item if $k > n$ recursively compute Find ($k-m; d_{m+1}, \dots, d_n$) 
-\end{itemize}
+    Output: find the k-th smallest $a_i$, ie the $k-th$ element if we sort $a_1, \dots, a_n$
 
-Proposition: $wtime_{Find}(n) = \mathscr{O}(n^2)$
-Proposition: $xtime_{Find}(n) = \mathscr{O}(n)$
+    An easy algorithm: sort the array, then select the k-th element from the array. Time complexity is $\mathscr{O}(n)$.
 
-\begin{proof}
-    We assume for convenience that all $a_1, \dots, a_n$ are distinct.
-    So always $m = l + 1$ = the order rank of $a_i$ in $a_1, \dots, a_n$.
-    From the algorithm we have for some constant $c$
-    $T(n) \leq c \cdot n + \frac{1}{n}[\sum_{m = 1}^{k-1} + \sum_{m = k + 1}^{n} T(m-1)]$
-    $T(1) \leq c$
+    A probabilistic algorithm with expected time $O(n)$:
 
-    We prove by induction the $T(n) \leq 4 c n$
-    $T(n) \leq cn + \frac{1}{n} [\sum_{m=1}^{k-1} T(n-m) + \sum_{m = k + 1}^{n} T(m-1)]$
-    $ \leq cn + \frac{4c}{n} [\sum_{m=1}^{k-1} (n-m) + \sum_{m = k + 1}^{n} (m-1)]$
-    (prepisi preostanek)
-\end{proof}
+    A recursive probabilistic algorithm Find (k; $a_1, \dots, a_n$)
+    \begin{itemize}
+        \item Randomly choose $i \in \{1, \dots, n\}$
+        \item Go through $a_1, \dots, a_n$ in turn and we return a permutation of $a_1, \dots, a_n$ of the form 
+        $b_1, \dots, b_l, c_{l+1}, \dots, c_m, d_{m+1}, \dots, d_n$ where $0 \leq l < m \leq n$
+        \item if $l + 1 \leq k \leq m$ return $a_i$
+        \item if $k \leq k$ recursively compute Find ($k$; $b_1, \dots, b_l$)
+        \item if $k > n$ recursively compute Find ($k-m; d_{m+1}, \dots, d_n$) 
+    \end{itemize}
+
+    Proposition: $wtime_{Find}(n) = \mathscr{O}(n^2)$
+
+    Proposition: $xtime_{Find}(n) = \mathscr{O}(n)$
+
+    \begin{proof}
+        We assume for convenience that all $a_1, \dots, a_n$ are distinct.
+        So always $m = l + 1$ = the order rank of $a_i$ in $a_1, \dots, a_n$.
+        From the algorithm we have for some constant $c$
+        $T(n) \leq c \cdot n + \frac{1}{n}[\sum_{m = 1}^{k-1} + \sum_{m = k + 1}^{n} T(m-1)]$
+        $T(1) \leq c$
+
+        We prove by induction the $T(n) \leq 4 c n$
+        \begin{align*}
+            T(n) \leq& cn + \frac{1}{n} [\sum_{m=1}^{k-1} T(n-m) + \sum_{m = k + 1}^{n} T(m-1)] \\
+                 \leq& cn + \frac{4c}{n} [\sum_{m=1}^{k-1} (n-m) + \sum_{m = k + 1}^{n} (m-1)] \\
+                 \leq& cn + \frac{4c}{n} \cdot \frac{3}{4} n^2 \\
+                 =& 4cn 
+        \end{align*}
+    \end{proof}
+
+    (visual proof v profesorjevih zapiskih)
+
+\end{example}
+
+
 
 
 \section{Primality testing}
 The Miller-Rabin property for prime numbers.
 
-If $p = 2^s \cdot d + 1$ is prime, where $d$ is odd, then for every numbe $a \in \{1, \dots, p-1$\}  one of the following holds;
+If $p = 2^s \cdot d + 1$ is prime, where $d$ is odd, then for every number $a \in \{1, \dots, p-1$\} one of the following holds;
 \begin{itemize}
-    \item[a] $a^d \equiv mod p$
-    \item[b] $a^{2^r \cdot d} \equiv -1 mod p$ for some $r \in \{0, \dots, s-1\}$
+    \item[a] $a^d \equiv 1 mod n$
+    \item[b] $a^{2^r \cdot d} \equiv -1 mod n$ for some $r \in \{0, \dots, s-1\}$
 \end{itemize}
 
-If $n = 2^s \cdot d + 1$ is composite (d odd, s $\geq$ 1), then at most $\frac{n}{4}$ of $a \in \{1, \dots, n'1\}$ satisfy one of (a) or (b) holds.
+If $n = 2^s \cdot d + 1$ is composite ($d$ odd, $s \geq 1$), then at most $\frac{n}{4}$ of $a \in \{1, \dots, n'1\}$ satisfy one of (a) or (b) holds.
 
-Miller-Rabin algorithm for large odd n = $2^s \cdot d + 1$in 
-- Randomly choose $a \in \{1, \dots, n-1\}$
-- check if one of (a) or (b) holds
-if so return PROBABLY Primeif not return COMPOSITE
+Miller-Rabin algorithm for large odd n = $2^s \cdot d + 1$ in
+\begin{itemize}
+    \item Randomly choose $a \in \{1, \dots, n-1\}$
+    \item check if one of (a) or (b) holds
+\end{itemize}
 
-If repeated k times the alg returns always probably prime, then there is only a probability of $\frac{1}{4^k}$ of error.
+if so return \textbf{PROBABLY Prime} if not return \textbf{COMPOSITE}.
+
+If repeated $k$ times the algorithm returns always \textbf{PROBABLY Prime}, then there is only a probability of $\frac{1}{4^k}$ of error.
+
 
 \section{BPP}
+
+(Bounded Probabilistic Polynomial)
 
 A PTM runs in expected polynomial time if there is a polynomial $p(n)$ such that $xtime_M(n) = \mathscr{O}(p(n))$.
 
 A PTM decides L with bounded error
 \begin{itemize}
     \item if on any input $w \in \Sigma^*$, M halts with probability 1 in either accept or reject.
-    \item if $w \in L$, P(M on w halts in accept) $\geq \frac{2}{3}$
-    \item if $w \notin L$, then P(M on w halts in reject) $\geq \frac{2}{3}$
+    \item if $w \in L$, P(M on $w$ halts in accept) $\geq \frac{2}{3}$
+    \item if $w \notin L$, then P(M on $w$ halts in reject) $\geq \frac{2}{3}$
 \end{itemize}
 
 BPP = $\{L | $ there exists an expected ptime probabilistic TM that decides L with bounded error$\}$
