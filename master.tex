@@ -243,7 +243,7 @@ These statements are equivalent, because 3-colourability is NP-complete.
 Related questions:
 \begin{itemize}
     \item Decision problem: Is a given graph 3-colourable (Does there exists a solution)
-    \item Search problem: Given a graph, find a 3-colouring (if one exists, otherwise return "I can't")
+    \item Search problem: Given a graph, find a 3-colouring (if one exists, otherwise return ``I can't'')
     \item Counting problem: Count the number of 3-colourings
     \item Sampling problem: Find a random (w.s.t. uniform distribution) 3-colouring.
 \end{itemize}
@@ -399,7 +399,7 @@ Transition function has form
 \begin{equation*}
     \delta: Q \times \Gamma^k \to Q \times \Gamma^k \times \{-1, 0, +1\}^k
 \end{equation*}
-We execute the machine in the "natural way" as in the example (not written).
+We execute the machine in the ``natural way'' as in the example (not written).
 
 \begin{definition}
     If M is a (k-tape) language recognising TM we define $time_M: \N \to \N$:
@@ -1048,7 +1048,7 @@ We define the configuration graph of M run on an input word w. Vertices are conf
     \item $v_1, \dots, v_k \in \Gamma^{p(|w|)}$ representing the relevant data on the K working tape + K head positions. 
 \end{itemize}
 
-Such a configuration $c$ can be encoded by word "c" $\in \{0, 1\}^{a p(|w|)}$
+Such a configuration $c$ can be encoded by word ``c'' $\in \{0, 1\}^{a p(|w|)}$
 
 The edges in the graph $c \to c'$ if M can make one step of computation from configuration $c$ to configuration $c'$.
 
@@ -1341,95 +1341,113 @@ BPP = $\{L | $ there exists an expected ptime probabilistic TM that decides L wi
 \section{The graph isomorphism problem (GI)}
 
 Input: $G_1, G_2$, two graphs with the same number of vertices given as adjecency matrices.
+
 Question: Are $G_1$ and $G_2$ isomorphic?
 
 As a language:
 \begin{equation*}
-    GI = \{"G_1", "G_2" | G_1 \text{ and } G_2 \text{ are isomorphic}\}
+    GI = \{\ulcorner G_1 \urcorner, \ulcorner G_2 \urcorner | G_1 \text{ and } G_2 \text{ are isomorphic } (G_1 \cong G_2)\}
 \end{equation*}
 
 \begin{equation*}
-    GNI = \{"G_1", "G_2" | G_1 \text{ and } G_2 \text{ are not isomorphic}\}
+    GNI = \{\ulcorner G_1 \urcorner, \ulcorner G_2 \urcorner | G_1 \text{ and } G_2 \text{ are not isomorphic } (G_1 \not \cong G_2)\}
 \end{equation*}
 
 GI and GNI are not known to be in P.
 
-Babai: GI is quasipolynomial, in fact decidable in $dtime(2^{(log n)^3})$.
+Babai: GI is quasipolynomial, in fact decidable in $DTime(2^{(\log n)^3})$.
 
 GI is clearly in NP (take the isomorphism itself as the certificate).
+
 GNI is clearly in coNP but not known to be in NP.
 
-How can we "certify" that two graphs are not isomorphic?
+How can we ``certify'' that two graphs are not isomorphic?
 
 By considering interactive protocols it is possible for a prover that knows that 2 graphs are not isomorphic to convince a verifier
 (that is polynomially time bounded but can use probability) of this fact with a probability of error that can be made arbitrarily small.
 
 This is an example of an interactive proof.
 
-\subsection*{An interactive proof showing that $G_1 /\cong G_2$}
+\subsection*{An interactive proof showing that $G_1 \not \cong G_2$}
 Assuming the 2 graphs are not isomorphic.
 
-V picks a random $i \in \{1, 2\}$ by tossing a fair coin and a random permutation $\sigma$ on $\{1, 2, \dots, n\}$ with the uniform distribution.
-V communicates $G_3 = \sigma (G_i)$ to the prover.
+\begin{enumerate}
+    \item \textbf{V} picks a random $i \in \{1, 2\}$ by tossing a fair coin and a random permutation $\sigma$ on $\{1, 2, \dots, n\}$ with the uniform distribution.
+        
+    \textbf{V} communicates $G_3 = \sigma (G_i)$ to the prover.
 
-P chooses $j$ where $j = 1 if G_3 = G_1 else 2$ and communicates $j$ to V.
+    \item \textbf{P} chooses $j$ where $j = 1$ if $G_3 = G_1$ else $2$ and communicates $j$ to \textbf{V}.
+    
+    \item \textbf{V} \textbf{accept} if $j = i$ else \textbf{reject}.
+\end{enumerate}
 
-V accept if $j = i$ else reject.
-
-If the two graphs are not isomorphic then V accepts with probability 1.
-If the two graphs are isomorphic
-irrespective of the algorithm that P uses for its part of the interaction.
-P(accept) = 1/2
+In total:
+\begin{itemize}
+    \item If the two graphs are not isomorphic then \textbf{V} \textbf{accept}s with probability $1$.
+    \item If the two graphs are isomorphic irrespective of the algorithm that \textbf{P} uses for its part of the interaction.
+    \item $P(\textbf{accept}) = \frac{1}{2}$
+\end{itemize}
 
 \subsection*{Completeness}
-There exists a behaviour of P such that if $G_1 /\cong G_2$ then P(accept) = 1.
+There exists a behaviour of P such that if $G_1 \not \cong G_2$ then $P(\textbf{accept}) = 1$.
 
 \subsection*{Soundness}
 For any P that conforms to the protocol (returns $j \in \{1, 2\}$)
-If $G_1 \cong G_2$ then P(reject) = 1/2
+If $G_1 \cong G_2$ then $P(\textbf{reject}) = \frac{1}{2}$
 
 \subsection*{Argument}
 The input to P is a graph uniformly at random from the collection of graphs isomorphic to $G_1$ and $G_2$.
-This gibes no information about $i$.
+This gives no information about $i$.
 
-The chance of $j$ is independent of $i$.
-So Pr(i=j)=1/2
+The chance of $j$ is independent of $i$. So $Pr(i \neq j) = \frac{1}{2}$.
 
-\subsection{Interactive protocols between V and P}
-V is given by a probabilistic TM
-P is any function $\Sigma^* \to \Sigma^*$
+\subsection{Interactive protocols between \textbf{V} and \textbf{P}}
+\textbf{V} is given by a probabilistic TM.
 
-A K.round interaction on input word $w \in \Sigma^*$ is (k can depend on $w$)
+\textbf{P} is any function $\Sigma^* \to \Sigma^*$.
 
-V computes r1, v1 = v(w)
-P computes p1 = P(w, v)
-...
-V halts in state V(w, r1, v1, p1, ..., rk, vk, pk) $\in$ (accept/reject)
+A K-round interaction on input word $w \in \Sigma^*$ is (k can depend on $w$):
+
+\begin{itemize}
+    \item \textbf{V} computes $r_1, v_1 = V(w)$
+    
+    \textbf{P} computes $p_1 = P(w, v)$
+
+    \item \dots
+    
+    \item \textbf{V} computes $r_k, v_k = V(w, r_1, v_1, p_1, \dots, r_{k-1}, v_{k-1}, p_{k-1})$
+    
+    \textbf{P} computes $p_k = P(w, v_1, p_1, \dots, v_{k-1}, p_{k-1}, v_k)$
+
+    \item \textbf{V} halts in state $V(w, r_1, v_1, p_1, \dots, r_k, v_k, p_k) \in \{\textbf{accept}, \textbf{reject}\}$
+\end{itemize}
 
 \begin{definition}
     IP (languages with interactive proofs)
 
-    $L \in IP $ if $\exists$ an expected polytime probabilistic TM V such that:
+    $L \in IP $ if there exists an expected polytime probabilistic TM V such that:
     \begin{itemize}
         \item completeness:
+        
         $\exists$ proover that interacts with V such that
         \begin{equation*}
-            \forall w \in L: Pr(Out<v,p,w>=accept) \geq 2/3
+            \forall w \in L: Pr(Out<v,p,w>=\textbf{accept}) \geq \frac{2}{3}
         \end{equation*}
         \item soundness:
+        
         $\forall$ proovers P that interact with V and
         \begin{equation*}
-            \forall w \notin L Pr(out<v,p,w>=reject) \geq 2/3
+            \forall w \notin L: Pr(out<v,p,w>=\textbf{reject}) \geq \frac{2}{3}
         \end{equation*}
     \end{itemize}
 
 \end{definition}
 
-Where P interacts with V means
+Where \textbf{P} interacts with \textbf{V} means
 \begin{itemize}
-    \item $\forall w, v_1, p_1, v_2, \dots, v_i | P(w, v1, p1 \dots) | \leq p(|w|)$
-    \item $\forall w \in \Sigma^* $ with probability 1 the P, V interaction on w halts in accept or reject in a number of rounds 
-    polynomial in the length of w.
+    \item $\forall w, v_1, p_1, v_2, \dots, v_i \; | P(w, v1, p1 \dots) | \: \leq p(|w|)$
+    \item $\forall w \in \Sigma^* $ with probability 1 the \textbf{P}, \textbf{V} interaction on $w$ halts in \textbf{accept} or \textbf{reject} in a number of rounds 
+    polynomial in the length of $w$.
 \end{itemize}
 
 
@@ -1444,64 +1462,85 @@ Where P interacts with V means
 
 Recall
 \begin{equation*}
-    GI = \{"G_1", "G_2" | G_1 \cong G_2 \text{ are isomorphic graphs}\}
+    GI = \{\ulcorner G_1 \urcorner, \ulcorner G_2 \urcorner | G_1 \cong G_2\}
 \end{equation*}
 
-Suppose P knows an isomorphism $\pi: G_1 \to G_2$. P can convince V that the graphs are isomorphic by 
-communicating $\pi$ to V.
+Suppose \textbf{P} knows an isomorphism $\pi: G_1 \to G_2$. \textbf{P} can convince \textbf{V} that the graphs are isomorphic by 
+communicating $\pi$ to \textbf{V}.
 
-We will show, that P can convince V that $G_1$ and $G_2$ are isomorphic without giving any information about the isomorphism
+We will show, that \textbf{P} can convince \textbf{V} that $G_1$ and $G_2$ are isomorphic without giving any information about the isomorphism
 $\pi$ (or indeed any other isomorphism).
 
 \subsection{ZKP for GI}
-Assume that P knows an isomorphism $\pi: [1, \dots, n] \to [1, \dots, n], \pi (G_1) = G_2$.
+Assume that \textbf{P} knows an isomorphism $\pi: [1, \dots, n] \to [1, \dots, n]$, $\pi (G_1) = G_2$.
 
-P generates a random permutation $\pi': [1, \dots, n] \to [1, \dots, n]$
-P communicates the graph $G_3 = \pi'(G_2)$ to V.
+\begin{enumerate}
+    \item \textbf{P} generates a random permutation $\pi': [1, \dots, n] \to [1, \dots, n]$
+    
+    \textbf{P} communicates the graph $G_3 = \pi'(G_2)$ to \textbf{V}.
 
-V tosses a coin $i \in \{1, 2\}$ with half-half probability and communicates $i$ to P.
+    \item \textbf{V} tosses a coin $i \in \{1, 2\}$ with half-half probability and communicates $i$ to \textbf{P}.
+    
+    \item \textbf{P} returns to \textbf{V} $\pi'' = $($\pi'$ if $i = 2$ or $\pi' \circ \pi$ if $i = 1$).
 
-P returns to V $\pi'' = (\pi'$ if $i = 2$ or $\pi' \circ \pi$ if $i = 1)$.
+    \item \textbf{V} checks that $\pi''(G_i) = G_3$ and if so \textbf{accept}s else \textbf{reject}s.
+\end{enumerate}
 
-V checks that $\pi''(G_i) = G_3$ and if so accepts else rejects.
+\begin{itemize}
+    \item Completeness:
+    
+    If $\pi$ is a graph isomorphism with $G_2 = \pi(G_1)$ then \textbf{V} accepts with probability 1.
+    
+    \item Soundness:
+    
+    If $G_1 \neq~ G_2$ then for any proover \textbf{P} interacting with \textbf{V} probability of reject $\geq \frac{1}{2}$.
+    
+    \item Zero-knowledge:
+    
+    If $G_1 \cong G_2$ amd \textbf{P} behaves following the rules then no $\textbf{V}^*$ learns anything about $\pi$ from the interaction.
+\end{itemize}
 
-Completeness: If $\pi$ is a graph isomorphism with $G_2 = \pi(G_1)$ then V accepts with probability 1.
-Soundness: If $G_1 \neq~ G_2$ then for any proover P interacting with V probability of reject $\geq \frac{1}{2}$.
-Zero-knowledge: If $G_1 \cong G_2$ amd P behaves following the rules then no V* learns anything about $\pi$ from the interaction.
-
-For any polytime probabilistic V* that interacts with P, there exists a ptime probabilistic S* that simulates the result
-of V*, P discourse without any recourse to $\pi$. I.e.,
+For any polytime probabilistic $\textbf{V}^*$ that interacts with \textbf{P}, there exists a ptime probabilistic $\textbf{S}^*$ that simulates the result
+of $\textbf{V}^*$, \textbf{P} discourse without any recourse to $\pi$. I.e.,
 \begin{equation*}
-    \forall ("G_1", "G_2") \in GI \dots
+    \forall (\ulcorner G_1 \urcorner, \ulcorner G_2 \urcorner) \in GI \dots
 \end{equation*}
 
-S* we have $G_1 \cong G_2$
+$\textbf{S}^*$ we have $G_1 \cong G_2$
 \begin{enumerate}
     \item Chooses a random $j \in \{1, 2\}$ (via fair coin) and random permutation $\pi'$ and generates $G_3 = \pi'(G_1)$
-    \item S* uses V* to do what it does to return $i \in \{1, 2\}$
+    \item $\textbf{S}^*$ uses $\textbf{V}^*$ to do what it does to return $i \in \{1, 2\}$
     \item if $i \neq j$ go back to step 1
-    \item simulate the second round of V* on input $\pi''$
+    \item simulate the second round of $\textbf{V}^*$ on input $\pi''$
 \end{enumerate}
 
 \subsection*{Suppose P knows a 3-colouring C of a graph G}
 
-P generates a random permutation $\sigma: \{R, G, B\} \to \{R, G, B\}$.
+\begin{enumerate}
+    \item \textbf{P} generates a random permutation $\sigma: \{R, G, B\} \to \{R, G, B\}$.
+    \item \textbf{V} chooses random edge of a graph.
+    \item \textbf{P} opens those envelopes (connected vertices to this edge).
+    \item \textbf{V} accepts if the two colours in the envelopes are different, reject if same.
+\end{enumerate}
 
-V chooses random edge of a graph.
+\begin{itemize}
+    \item Completeness:
+    
+    If G is 3-colourable and C is a 3-colouring then $P(\textbf{accept}) = 1$
 
-P opens those envelopes (connected vertices to this edge).
+    \item Soundness:
+    
+    If there is no 3-colouring then for any $\textbf{P}^*$ we have $P(\textbf{reject}) \geq \frac{1}{n^2}$
 
-V accepts if the two colours in the envelopes are different, reject if same.
-
-Completeness: If G is 3-colourable and C is a 3-colouring then P(accept) = 1
-Soundness: If there is no 3-colouring then for any P* we have P(reject) $\geq \frac{1}{n^2}$
-Zero-knowledge: If C is a 3-colouring of G and P is behaving as its supposed to then no prob. ptime verifier 
-learns anything about C from the interaction.
+    \item Zero-knowledge:
+    
+    If C is a 3-colouring of G and \textbf{P} is behaving as its supposed to then no probabilistic ptime verifier learns anything about C from the interaction.
+\end{itemize}
 
 The sealed envelopes are implemented using bit commitment.
 
-A one-way function is a ptime computable $f: \Sigma^* \to \Sigma^*$ s.t. for any ptime A there is a negligible function
-$\Sigma$ s.t. for all $n$:
+A one-way function is a ptime computable $f: \Sigma^* \to \Sigma^*$ such that for any ptime A there is a negligible function
+$\Sigma$ such that for all $n$:
 \begin{equation*}
     Pr_{x \in \Sigma^n} [A(f(x)) = x' s \cdot t f(x') = f(x)] < \Sigma(n)
 \end{equation*}
@@ -1514,7 +1553,7 @@ A one-way permutation is a one-way function with two additional properties:
     \item $\forall w \in \Sigma^* |f(w)| = |w|$
 \end{itemize}
 
-Follows that f is a permutation on $\Sigma^n$ % preveri to
+Follows that $f$ is a permutation on $\Sigma^n$ % preveri to
 
 Assumption for next part of lecture: a 1-way permutation exists.
 
@@ -1528,11 +1567,13 @@ Assumption for next part of lecture: a 1-way permutation exists.
     \begin{equation*}
         [x \odot r = \sum_{i=1}^{n} x_i r_i mod 2]
     \end{equation*}
-    To commit a bit b. 
-    Pick a sufficiently safe n.
-    Randomly choose x, r $\in \Sigma^n$ suct that xor = b.
-    Then (f(x), r) is my 'sealed envelope' and can be publicly revealed.
-    To reveal the information, reveal x.
+    To commit a bit b:
+    \begin{itemize}
+        \item Pick a sufficiently safe n
+        \item Randomly choose x, r $\in \Sigma^n$ such that xor = b
+        \item Then (f(x), r) is my 'sealed envelope' and can be publicly revealed
+        \item To reveal the information, reveal x
+    \end{itemize}
 \end{theorem}
 
 
@@ -1541,7 +1582,7 @@ Assumption for next part of lecture: a 1-way permutation exists.
 
 
 
-
+% Samo za 10-ko
 \newpage
 % 18.12.2023
 \section{$IP = PSPACE$}
@@ -1746,6 +1787,9 @@ This is done using $\frac{n (n + 3)}{2}$ rounds of interaction using protocols f
     has a (k+1)-rounds $(\epsilon + \frac{d}{p})$-error value checker.
 \end{lemma}
 
+
+
+% Od tu naprej za vse
 \section{Complexity classes}
 Decision problems are represented by functions $\Sigma^* \to \{0, 1\}$.
 
@@ -1793,7 +1837,7 @@ $\#SAT(\Phi) =$ the number of satisfying assignments for $\Phi$.
 $\#3Col(G) =$ the number of 3-colourings of G.
 
 \subsubsection{$\#$P}
-"Sharp P"
+``Sharp P''
 
 A function $f: \Sigma^* \to \N$ belongs to $\#$P if there exsists a deterministic polytime M
 and polynomial p s.t.
@@ -1883,7 +1927,7 @@ The counting problem $\#$CYCLE:
                                       =& 2^{n^2 \lceil log_2 n \rceil} 
         \end{align*}
 
-        Decide "G has a Hamiltonian cycle" by:
+        Decide ``G has a Hamiltonian cycle'' by:
         \begin{equation*}
             \#CYCLE(G') \geq 2^{n^2 \lceil log_2 n \rceil} 
         \end{equation*}
@@ -1913,6 +1957,9 @@ $f$ is $\#$P-complete if $f \in \#P$ and $f$ is $\#$P-hard.
 \begin{theorem}
     $\#$SAT is $\#$P-complete.
 \end{theorem}
+
+
+
 
 
 
