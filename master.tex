@@ -1588,207 +1588,257 @@ Assumption for next part of lecture: a 1-way permutation exists.
 \newpage
 % 18.12.2023
 \section{$IP = PSPACE$}
-This section is not completed. This topic is required only for challenge exam.
-%\subsection{$IP \subseteq PSPACE$}
-%An IP for L is given by a ptime probabilistic V such that:
-%\begin{itemize}
-%    \item completeness: There exists some P interacting with V such for any $w \in L$ the interaction accepts with prob $\geq \frac{2}{3}$
-%    \item soundness: For any $w \notin L$, and any P* interacting with V, the interaction accepts with probability $\leq \frac{1}{3}$  
-%\end{itemize}
-%
-%P not assumed to satisfy any resource bounds, need not be computable.
-%
-%However there exists an optimum P and this P is in PSPACE.
-%
-%\begin{theorem}
-%    $IP \subseteq PSPACE$
-%\end{theorem}
-%
-%We can assume V is worst case ptime!
-%
-%\begin{proof}
-%    (outline):
-%    Suppose V is a (worst-case) ptime probabilistic verifier of an IP for L.
-%
-%    Given a word $w \in \Sigma^*$
-%
-%    Construct a tree of all possible interactions between all possible P*s and V on input w.
-%
-%    (slikca)
-%
-%    The tree takes up more than polynomial space. But using polynomial space we can do a depth first search. At each node we calculate
-%    the highest probability that V can accept from that node if P* is as cooperative as possible from that point onward.
-%
-%    This gives a value to the root of the tree. Accept if root value $\geq \frac{2}{3}$, reject if the root value $\leq \frac{1}{3}$.
-%\end{proof}
-%
-%The optimum proover goes down the branch with the highest value.
-%
-%\subsection*{Warm up for main theorem: $UNSAT \in IP$}
-%$\#3-SAT_D = \{("\phi", k) | \phi$ is a 3-CNF and $k$ = number of satisfying assignments for $\phi\}$
-%
-%\begin{theorem}
-%    $\#3-SAT_D \in IP$
-%\end{theorem}
-%
-%\begin{corollary}
-%    $UNSAT \in IP$
-%\end{corollary}
-%
-%We convert a 3-CNF formula $\Phi (x_1, \dots, x_n)$
-%
-%% (formula) Ne vem ce je potrebno ...
-%
-%to a polynomial $f_{\Phi} (x_1, \dots, x_n)$
-%
-%The number of satisfying assignments of $\Phi$ is
-%
-%\begin{equation*}
-%    \sum_{b_1 \in \{0, 1}\} \sum_{b_2 \in \{0, 1}\} \dots \sum_{b_n \in \{0, 1}\} f_{\Phi} (b_1, b_2, \dots, b_n)
-%\end{equation*}
-%
-%We cant efficiently compute the sum, because it is a sum over $2^n$ vectors.
-%
-%P sends V a prime p in the range $(2^{|\Phi|}, 2^{|\Phi|+1})$.
-%V verifies that p is prime (e.g. by AKS algorithm). If not reject.
-%If p is prime V asks P to convince it that (formula).
-%
-%Interlude: Checking the value of polynomials over $FF_p$ ([p]).
-%
-%An $\epsilon$-error value checker for a polynomial $g(x_1, \dots, x_n)$ of degree $\leq d$ is IP that takes $n$ values $a_1, \dots, a_n, c \in [p]$
-%as input and satisfies:
-%completeness if $g(x_1, \dots, x_n) = c$ then the interaction accepts with prob 1
-%soundness : if $g(x_1, \dots, x_n) \neq c$ then for any P* the interaction accepts with prob $\leq \epsilon$.
-%
-%\begin{lemma}
-%    If $G(x_1, \dots, x_n)$ of degree d has a k-round (of P) $\epsilon$-error value checker then
-%    $g'(x_1, \dots, x_{n-1}) = \sum_{x_n \in \{0, 1\}} g(x_1, \dots, x_n)$ has a (k+1)-round
-%    $(\epsilon + \frac{d}{p})$-value checker.
-%\end{lemma}
-%
-%\begin{proof}
-%    We have the following protocol for $a_1, \dots, a_{n-1}, c$. To verify $g'$ = c: $\sum_{x_n \in \{0, 1\}} g(a_1, \dots, a_{n-1}, x_n) = c$:
-%    P sends V the at most d + 1 coefficients for the univarate polynomial $h(x_n) = g(a_1, \dots, a_{n-1}, x_n)$
-%    V checks if $h(0) + h(1) = c$. If not reject:
-%    chooses random $a_n \in [p]$, sends this to p
-%    (PV)* Follow the assumed IP to check if $h(a_n) = g(a_1, \dots, a_{n-1}, a_n)$
-%
-%    Complete the protocol using the $n$-rounds of P IP provided by $n$ iterations of the lemma above starting with deterministic ptime verifier that
-%    $f_{\Phi} (a_1, \dots, a_n) = c$ (which is a 0-round 0-error value checker)
-%\end{proof}
-%
-%
-%\subsection{Theorem: $TQBF \in IP$}
-%\begin{theorem}
-%    $TQBF \in IP$
-%\end{theorem}
-%A major result. See notes: christmas reading. See textbook.
-%\subsection*{Corollary $PSPACE \subseteq IP$}
-%If $L \in IP$ and $L' \leq_p L$ it is easy to show that $L' \in IP$.
-%
-%As a consequence $TQBF \in IP \implies PSPACE \subseteq IP$
-%
-%
-%
-%
-%
-%
-%
-%\newpage
-%% 8.1.2024
-%% nadaljevanje od zadnjic
-%Goal of first hour: Complete proof that $IP = PSPACE$.
-%
-%Last lecture:
-%\begin{itemize}
-%    \item $IP \subseteq PSPACE$
-%    \item To show $PSPACE \subseteq IP$ it suffies to show $TQBF \in IP$
-%    \item We showed as a warm-up: $3-SAT \in IP$
-%\end{itemize}
-%
-%\subsection{$TQBF \in IP$}
-%We need an IP to convince us of the truth of a formula
-%\begin{equation*}
-%    Q_1 x_1 \dots Q_n x_n \Psi (x_1, \dots, x_n)
-%\end{equation*}
-%where $\Psi$ is in 3-CNF.
-%
-%First idea (as for $3-SAT$) we 'arithmetise' instead of 
-%\begin{equation*}
-%    \forall x_1 \exists x_2 \forall x_3 \exists x_4 \Psi (x_1, x_2, x_3, x_4)
-%\end{equation*}
-%(is true iff)
-%Consider
-%\begin{equation*}
-%    \prod_{x_1 \in \{0, 1\}} \sum_{x_2 \in \{0, 1\}} \prod_{x_3 \in \{0, 1\}} \sum_{x_4 \in \{0, 1\}} f_\Psi (x_1, x_2, x_3, x_4)
-%\end{equation*}
-%$ \neq 0$
-%e.g. if $\Psi$ is $(x_1 \lor \neg x_2 \lor x_3) \land (\neg x_1 \lor x_2)$ then
-%\begin{equation*}
-%    f_\Psi (1 - ((1 - x_1) \cdot x_2 \cdot (1 - x_3))) \cdot (1 - x_1 (1 - x_2))
-%\end{equation*}
-%
-%Issues with using $\sum, \prod$ expansion
-%\begin{itemize}
-%    \item Result value is bounded by $2^{2^n}$ rather than $2^n$
-%    \item the intermediate steps of the protocol involve multiplying polynomials and the degree is not polynomialy bounded.
-%\end{itemize}
-%
-%To address the first problem we replace 
-%\begin{equation*}
-%    \sum_{b \in \{0, 1\}} a_b
-%\end{equation*}
-%with
-%\begin{equation*}
-%   \coprod_{b \in \{0, 1\}} a_b = a_0 + a_1 - a_0 a_1 %(prod mora biti obrnjen na glavo)
-%\end{equation*}
-%This coincides with disjunction on values $a_b \in \{0, 1\}$.
-%
-%We change formula from up to this:
-%\begin{equation*}
-%    \prod_{x_1 \in \{0, 1\}} \coprod_{x_2 \in \{0, 1\}} \prod_{x_3 \in \{0, 1\}} \coprod_{x_4 \in \{0, 1\}} f_\Psi (x_1, x_2, x_3, x_4)
-%\end{equation*}
-%
-%To address the second problem, use the observation for $x \in \{0, 1\}$
-%\begin{equation*}
-%    x = x^2 = x^3 = x^4 = \dots
-%\end{equation*}
-%Given a polynomial $f(x_1, \dots, x_n)$
-%
-%Consider
-%\begin{align*}
-%    L_i(f) =& x_i \cdot f(x_1, \dots, x_{i-1}, 1, x_{i+1}, \dots, x_n) \\
-%           +& (1 - x_i) \cdot f(x_1, \dots, x_{i-1}, 0, x_{i+1}, \dots, x_n)
-%\end{align*}
-%
-%$L_i(f)$ agrees with $f$ on $x_i \in \{0, 1\}$ and is linear in $x_i$, $deg(L_i(f)) \leq deg(f) + 1$.
-%The degree of all variables other than $x:i$ is unchanged
-%
-%Instead, we consider:
-%\begin{equation*}
-%    \prod_{x_1} L_1 \coprod_{x_2} L_1 L_2 \prod_{x_3} L_1 L_2 L_3 \coprod_{x_4} L_1 L_2 L_3 L_4 f_\Psi(x_1, x_2, x_3, x_4) = 1
-%\end{equation*}
-%degree is always bounded by $max(3m + n - 1, 2n)$. We get $\mathscr{O}(n^2)$
-%
-%IP protocol for $Q_1 x_1 \dots Q_n x_n \Psi = 1$
-%
-%P sends V a large enough prime p (to keep error small)
-%
-%V verifies that p is prime (else reject)
-%asks P to convince it that
-%\begin{equation*}
-%    \prod_{x_1} L_1 \prod_{x_2} L_1 L_2 \dots \prod_{x_n} L_1 \dots L_n f_\Psi (x_1, \dots, x_n) = 1 %\prod je hkrati prod in amalg  
-%\end{equation*}
-%This is done using $\frac{n (n + 3)}{2}$ rounds of interaction using protocols for each operator.
-%
-%\begin{lemma}
-%    If we have a polynomial $g(x_1, \dots, x_n)$ of degree $\leq d$ has a k-rounds $\epsilon$-error value checker.
-%    Then 
-%    \begin{equation*}
-%        g_{L_i} (x_1, \dots, x_n) = L_i(g)
-%    \end{equation*}
-%    has a (k+1)-rounds $(\epsilon + \frac{d}{p})$-error value checker.
-%\end{lemma}
+\subsection{$IP \subseteq PSPACE$}
+An IP for language $L$ is given by a ptime probabilistic \textbf{V} such that:
+\begin{itemize}
+    \item completeness: There exists some \textbf{P} interacting with \textbf{V} such for any $w \in L$ the interaction accepts with probability $\geq \frac{2}{3}$
+    \item soundness: For any $w \notin L$, and any $\textbf{P}^*$ interacting with \textbf{V}, the interaction accepts with probability $\leq \frac{1}{3}$  
+\end{itemize}
+
+\textbf{P} not assumed to satisfy any resource bounds, need not be computable.
+
+However there exists an optimum \textbf{P} and this \textbf{P} is in PSPACE.
+
+\begin{theorem}
+    $IP \subseteq PSPACE$
+\end{theorem}
+
+We can assume \textbf{V} is worst case ptime!
+
+\begin{proof}
+    (outline):
+    Suppose V is a (worst-case) ptime probabilistic verifier of an IP for L.
+
+    Given a word $w \in \Sigma^*$.
+    
+    Construct a tree of all possible interactions between all possible $\textbf{P}^*$s and \textbf{V} on input $w$.
+
+    \begin{center}
+        \begin{forest}
+            [\textbf{V}%: input %$w \in \Sigma^{p(|w|)}$
+                [\textbf{P}
+                    [\textbf{V}
+                        [\textbf{P}
+                            [\textbf{V}
+                                [...]
+                                [...]
+                            ]
+                            [...]
+                        ]
+                        [\textbf{accept}]
+                    ]
+                    [\textbf{V}
+                        [...]
+                        [\textbf{P}
+                            [...]
+                            [\textbf{V}
+                                [\textbf{reject}]
+                                [\textbf{accept}]
+                            ]
+                        ]
+                    ]
+                ]
+                [\textbf{P}
+                    [\textbf{V}
+                        [...]
+                        [\textbf{reject}]
+                    ]
+                    [\textbf{V}
+                        [...]
+                        [...]
+                    ]
+                ]
+            ]
+        \end{forest}
+    \end{center}
+
+    In first root \textbf{V} recieves $w$ as an input, where $w \in \Sigma^{p(|w|)}$. Then,
+    \begin{itemize}
+        \item At V nodes calculate weighted average
+        \item At P nodes calculate maximum
+    \end{itemize}
+
+    The tree takes up more than polynomial space. But using polynomial space we can do a depth first search. At each node we calculate
+    the highest probability that \textbf{V} can accept from that node if $\textbf{P}^*$ is as cooperative as possible from that point onward.
+
+    This gives a value to the root of the tree. Accept if root value $\geq \frac{2}{3}$, reject if the root value $\leq \frac{1}{3}$.
+\end{proof}
+
+The optimum proover goes down the branch with the highest value.
+
+\subsection*{Warm up for main theorem: $UNSAT \in IP$}
+$\#3-SAT_D = \{("\phi", k) | \phi$ is a 3-CNF and $k$ = number of satisfying assignments for $\phi\}$
+
+\begin{theorem}
+    $\#3-SAT_D \in IP$
+\end{theorem}
+
+\begin{corollary}
+    $UNSAT \in IP$
+\end{corollary}
+
+We convert a 3-CNF formula $\Phi (x_1, \dots, x_n)$
+
+% (formula) Ne vem ce je potrebno ...
+
+to a polynomial $f_{\Phi} (x_1, \dots, x_n)$
+
+The number of satisfying assignments of $\Phi$ is
+
+\begin{equation*}
+    \sum_{b_1 \in \{0, 1\}} \sum_{b_2 \in \{0, 1\}} \dots \sum_{b_n \in \{0, 1\}} f_{\Phi} (b_1, b_2, \dots, b_n)
+\end{equation*}
+
+We cant efficiently compute the sum, because it is a sum over $2^n$ vectors.
+
+\textbf{P} sends \textbf{V} a prime $p$ in the range $(2^{|\Phi|}, 2^{|\Phi|+1})$.
+
+\textbf{V} verifies that $p$ is prime (e.g. by AKS algorithm). If not \textbf{reject}.
+
+If $p$ is prime \textbf{V} asks \textbf{P} to convince it that (formula).
+
+Interlude: Checking the value of polynomials over $FF_p$ ([p]).
+
+An $\epsilon$-error value checker for a polynomial $g(x_1, \dots, x_n)$ of degree $\leq d$ is IP that takes $n$ values $a_1, \dots, a_n, c \in [p]$
+as input and satisfies:
+\begin{itemize}
+    \item completeness: if $g(x_1, \dots, x_n) = c$ then the interaction accepts with probability $1$
+    \item soundness: if $g(x_1, \dots, x_n) \neq c$ then for any $\textbf{P}^*$ the interaction accepts with prob $\leq \epsilon$.
+\end{itemize}
+
+\begin{lemma}
+    If $G(x_1, \dots, x_n)$ of degree d has a k-round (of P) $\epsilon$-error value checker then
+    $g'(x_1, \dots, x_{n-1}) = \sum_{x_n \in \{0, 1\}} g(x_1, \dots, x_n)$ has a (k+1)-round
+    $(\epsilon + \frac{d}{p})$-value checker.
+\end{lemma}
+
+\begin{proof}
+    We have the following protocol for $a_1, \dots, a_{n-1}, c$. To verify $g'$ = c: $\sum_{x_n \in \{0, 1\}} g(a_1, \dots, a_{n-1}, x_n) = c$:
+    \begin{itemize}
+        \item \textbf{P} sends V the at most d + 1 coefficients for the univarate polynomial $h(x_n) = g(a_1, \dots, a_{n-1}, x_n)$
+        \item \textbf{V} checks if $h(0) + h(1) = c$. If not \textbf{reject}
+        \item \textbf{V}chooses random $a_n \in [p]$, sends this to \textbf{P}
+        \item $(\textbf{PV})^*$ Follow the assumed IP to check if $h(a_n) = g(a_1, \dots, a_{n-1}, a_n)$
+    \end{itemize}
+    
+    Complete the protocol using the $n$-rounds of \textbf{P} IP provided by $n$ iterations of the lemma above starting with deterministic ptime verifier that
+    $f_{\Phi} (a_1, \dots, a_n) = c$ (which is a 0-round 0-error value checker)
+\end{proof}
+
+
+\subsection{Theorem: $TQBF \in IP$}
+\begin{theorem}
+    $TQBF \in IP$
+\end{theorem}
+A major result. See notes: christmas reading. See textbook.
+\subsection*{Corollary $PSPACE \subseteq IP$}
+If $L \in IP$ and $L' \leq_p L$ it is easy to show that $L' \in IP$.
+
+As a consequence $TQBF \in IP \implies PSPACE \subseteq IP$
+
+
+
+
+
+
+
+\newpage
+% 8.1.2024
+% nadaljevanje od zadnjic
+Goal of first hour: Complete proof that $IP = PSPACE$.
+
+Last lecture:
+\begin{itemize}
+    \item $IP \subseteq PSPACE$
+    \item To show $PSPACE \subseteq IP$ it suffies to show $TQBF \in IP$
+    \item We showed as a warm-up: $3-SAT \in IP$
+\end{itemize}
+
+\subsection{$TQBF \in IP$}
+We need an IP to convince us of the truth of a formula
+\begin{equation*}
+    Q_1 x_1 \dots Q_n x_n \Psi (x_1, \dots, x_n)
+\end{equation*}
+where $\Psi$ is in 3-CNF.
+
+First idea (as for $3-SAT$) we ``arithmetise'' instead of 
+\begin{equation*}
+    \forall x_1 \exists x_2 \forall x_3 \exists x_4 \Psi (x_1, x_2, x_3, x_4)
+\end{equation*}
+(is true iff)
+
+Consider
+\begin{equation*}
+    \prod_{x_1 \in \{0, 1\}} \sum_{x_2 \in \{0, 1\}} \prod_{x_3 \in \{0, 1\}} \sum_{x_4 \in \{0, 1\}} f_\Psi (x_1, x_2, x_3, x_4)
+\end{equation*}
+$ \neq 0$
+
+e.g. if $\Psi$ is $(x_1 \lor \neg x_2 \lor x_3) \land (\neg x_1 \lor x_2)$ then
+\begin{equation*}
+    f_\Psi (1 - ((1 - x_1) \cdot x_2 \cdot (1 - x_3))) \cdot (1 - x_1 (1 - x_2))
+\end{equation*}
+
+Issues with using $\sum, \prod$ expansion
+\begin{itemize}
+    \item Result value is bounded by $2^{2^n}$ rather than $2^n$
+    \item the intermediate steps of the protocol involve multiplying polynomials and the degree is not polynomialy bounded.
+\end{itemize}
+
+To address the first problem we replace 
+\begin{equation*}
+    \sum_{b \in \{0, 1\}} a_b
+\end{equation*}
+with
+\begin{equation*}
+   \coprod_{b \in \{0, 1\}} a_b = a_0 + a_1 - a_0 a_1 %(prod mora biti obrnjen na glavo)
+\end{equation*}
+This coincides with disjunction on values $a_b \in \{0, 1\}$.
+
+We change formula from up to this:
+\begin{equation*}
+    \prod_{x_1 \in \{0, 1\}} \coprod_{x_2 \in \{0, 1\}} \prod_{x_3 \in \{0, 1\}} \coprod_{x_4 \in \{0, 1\}} f_\Psi (x_1, x_2, x_3, x_4)
+\end{equation*}
+
+To address the second problem, use the observation for $x \in \{0, 1\}$
+\begin{equation*}
+    x = x^2 = x^3 = x^4 = \dots
+\end{equation*}
+Given a polynomial $f(x_1, \dots, x_n)$
+
+Consider
+\begin{align*}
+    L_i(f) =& x_i \cdot f(x_1, \dots, x_{i-1}, 1, x_{i+1}, \dots, x_n) \\
+           +& (1 - x_i) \cdot f(x_1, \dots, x_{i-1}, 0, x_{i+1}, \dots, x_n)
+\end{align*}
+
+$L_i(f)$ agrees with $f$ on $x_i \in \{0, 1\}$ and is linear in $x_i$, $deg(L_i(f)) \leq deg(f) + 1$.
+The degree of all variables other than $x:i$ is unchanged
+
+Instead, we consider:
+\begin{equation*}
+    \prod_{x_1} L_1 \coprod_{x_2} L_1 L_2 \prod_{x_3} L_1 L_2 L_3 \coprod_{x_4} L_1 L_2 L_3 L_4 f_\Psi(x_1, x_2, x_3, x_4) = 1
+\end{equation*}
+degree is always bounded by $max(3m + n - 1, 2n)$. We get $\mathscr{O}(n^2)$
+
+IP protocol for $Q_1 x_1 \dots Q_n x_n \Psi = 1$
+
+\textbf{P} sends \textbf{V} a large enough prime p (to keep error small)
+
+\textbf{V} verifies that $p$ is prime (else \textbf{reject}) and
+asks \textbf{P} to convince it that
+\begin{equation*}
+    \prod_{x_1} L_1 \prod_{x_2} L_1 L_2 \dots \prod_{x_n} L_1 \dots L_n f_\Psi (x_1, \dots, x_n) = 1 %\prod je hkrati prod in amalg  
+\end{equation*}
+This is done using $\frac{n (n + 3)}{2}$ rounds of interaction using protocols for each operator.
+
+\begin{lemma}
+    If we have a polynomial $g(x_1, \dots, x_n)$ of degree $\leq d$ has a k-rounds $\epsilon$-error value checker.
+    Then 
+    \begin{equation*}
+        g_{L_i} (x_1, \dots, x_n) = L_i(g)
+    \end{equation*}
+    has a (k+1)-rounds $(\epsilon + \frac{d}{p})$-error value checker.
+\end{lemma}
 
 
 \newpage
@@ -2145,4 +2195,19 @@ The above algorithm is correct on $> \frac{2}{3}$ fraction of inputs.
     \end{itemize}
 \end{theorem}
 
+
+\newpage
+\section{The big picture}
+\includegraphics[width=\textwidth]{img/TheBigPicture.png}
+Known strict inclusions (hierarchy theorems):
+\begin{itemize}
+    \item $NL \subset PSPACE$
+    \item $P \subset EXP$
+\end{itemize}
+The red inclusions:
+\begin{itemize}
+    \item ($\exists$ strong pseude-random generator) $\implies$ $BPP = P$
+    \item ($\exists$ one-way function) $\implies$ $CZKP = NP$
+    \item The equality $P^{\#P} = PSPACE$ is not known to have any unlikely ???
+\end{itemize}
 \end{document}
