@@ -11,6 +11,8 @@
 \usepackage{cancel}
 \usepackage[export]{adjustbox}
 
+\usepackage{csquotes}
+
 % Related to math
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{mathtools}
@@ -1586,215 +1588,213 @@ Assumption for next part of lecture: a 1-way permutation exists.
 \newpage
 % 18.12.2023
 \section{$IP = PSPACE$}
-\subsection{$IP \subseteq PSPACE$}
-An IP for L is given by a ptime probabilistic V such that:
-\begin{itemize}
-    \item completeness: There exists some P interacting with V such for any $w \in L$ the interaction accepts with prob $\geq \frac{2}{3}$
-    \item soundness: For any $w \notin L$, and any P* interacting with V, the interaction accepts with probability $\leq \frac{1}{3}$  
-\end{itemize}
-
-P not assumed to satisfy any resource bounds, need not be computable.
-
-However there exists an optimum P and this P is in PSPACE.
-
-\begin{theorem}
-    $IP \subseteq PSPACE$
-\end{theorem}
-
-We can assume V is worst case ptime!
-
-\begin{proof}
-    (outline):
-    Suppose V is a (worst-case) ptime probabilistic verifier of an IP for L.
-
-    Given a word $w \in \Sigma^*$
-
-    Construct a tree of all possible interactions between all possible P*s and V on input w.
-
-    (slikca)
-
-    The tree takes up more than polynomial space. But using polynomial space we can do a depth first search. At each node we calculate
-    the highest probability that V can accept from that node if P* is as cooperative as possible from that point onward.
-
-    This gives a value to the root of the tree. Accept if root value $\geq \frac{2}{3}$, reject if the root value $\leq \frac{1}{3}$.
-\end{proof}
-
-The optimum proover goes down the branch with the highest value.
-
-\subsection*{Warm up for main theorem: $UNSAT \in IP$}
-$\#3-SAT_D = \{("\phi", k) | \phi$ is a 3-CNF and $k$ = number of satisfying assignments for $\phi\}$
-
-\begin{theorem}
-    $\#3-SAT_D \in IP$
-\end{theorem}
-
-\begin{corollary}
-    $UNSAT \in IP$
-\end{corollary}
-
-We convert a 3-CNF formula $\Phi (x_1, \dots, x_n)$
-
-% (formula) Ne vem ce je potrebno ...
-
-to a polynomial $f_{\Phi} (x_1, \dots, x_n)$
-
-The number of satisfying assignments of $\Phi$ is
-
-\begin{equation*}
-    \sum_{b_1 \in \{0, 1}\} \sum_{b_2 \in \{0, 1}\} \dots \sum_{b_n \in \{0, 1}\} f_{\Phi} (b_1, b_2, \dots, b_n)
-\end{equation*}
-
-We cant efficiently compute the sum, because it is a sum over $2^n$ vectors.
-
-P sends V a prime p in the range $(2^{|\Phi|}, 2^{|\Phi|+1})$.
-V verifies that p is prime (e.g. by AKS algorithm). If not reject.
-If p is prime V asks P to convince it that (formula).
-
-Interlude: Checking the value of polynomials over $FF_p$ ([p]).
-
-An $\epsilon$-error value checker for a polynomial $g(x_1, \dots, x_n)$ of degree $\leq d$ is IP that takes $n$ values $a_1, \dots, a_n, c \in [p]$
-as input and satisfies:
-completeness if $g(x_1, \dots, x_n) = c$ then the interaction accepts with prob 1
-soundness : if $g(x_1, \dots, x_n) \neq c$ then for any P* the interaction accepts with prob $\leq \epsilon$.
-
-\begin{lemma}
-    If $G(x_1, \dots, x_n)$ of degree d has a k-round (of P) $\epsilon$-error value checker then
-    $g'(x_1, \dots, x_{n-1}) = \sum_{x_n \in \{0, 1\}} g(x_1, \dots, x_n)$ has a (k+1)-round
-    $(\epsilon + \frac{d}{p})$-value checker.
-\end{lemma}
-
-\begin{proof}
-    We have the following protocol for $a_1, \dots, a_{n-1}, c$. To verify $g'$ = c: $\sum_{x_n \in \{0, 1\}} g(a_1, \dots, a_{n-1}, x_n) = c$:
-    P sends V the at most d + 1 coefficients for the univarate polynomial $h(x_n) = g(a_1, \dots, a_{n-1}, x_n)$
-    V checks if $h(0) + h(1) = c$. If not reject:
-    chooses random $a_n \in [p]$, sends this to p
-    (PV)* Follow the assumed IP to check if $h(a_n) = g(a_1, \dots, a_{n-1}, a_n)$
-
-    Complete the protocol using the $n$-rounds of P IP provided by $n$ iterations of the lemma above starting with deterministic ptime verifier that
-    $f_{\Phi} (a_1, \dots, a_n) = c$ (which is a 0-round 0-error value checker)
-\end{proof}
-
-
-\subsection{Theorem: $TQBF \in IP$}
-\begin{theorem}
-    $TQBF \in IP$
-\end{theorem}
-A major result. See notes: christmas reading. See textbook.
-\subsection*{Corollary $PSPACE \subseteq IP$}
-If $L \in IP$ and $L' \leq_p L$ it is easy to show that $L' \in IP$.
-
-As a consequence $TQBF \in IP \implies PSPACE \subseteq IP$
-
-
-
-
-
+This section is not completed. This topic is required only for challenge exam.
+%\subsection{$IP \subseteq PSPACE$}
+%An IP for L is given by a ptime probabilistic V such that:
+%\begin{itemize}
+%    \item completeness: There exists some P interacting with V such for any $w \in L$ the interaction accepts with prob $\geq \frac{2}{3}$
+%    \item soundness: For any $w \notin L$, and any P* interacting with V, the interaction accepts with probability $\leq \frac{1}{3}$  
+%\end{itemize}
+%
+%P not assumed to satisfy any resource bounds, need not be computable.
+%
+%However there exists an optimum P and this P is in PSPACE.
+%
+%\begin{theorem}
+%    $IP \subseteq PSPACE$
+%\end{theorem}
+%
+%We can assume V is worst case ptime!
+%
+%\begin{proof}
+%    (outline):
+%    Suppose V is a (worst-case) ptime probabilistic verifier of an IP for L.
+%
+%    Given a word $w \in \Sigma^*$
+%
+%    Construct a tree of all possible interactions between all possible P*s and V on input w.
+%
+%    (slikca)
+%
+%    The tree takes up more than polynomial space. But using polynomial space we can do a depth first search. At each node we calculate
+%    the highest probability that V can accept from that node if P* is as cooperative as possible from that point onward.
+%
+%    This gives a value to the root of the tree. Accept if root value $\geq \frac{2}{3}$, reject if the root value $\leq \frac{1}{3}$.
+%\end{proof}
+%
+%The optimum proover goes down the branch with the highest value.
+%
+%\subsection*{Warm up for main theorem: $UNSAT \in IP$}
+%$\#3-SAT_D = \{("\phi", k) | \phi$ is a 3-CNF and $k$ = number of satisfying assignments for $\phi\}$
+%
+%\begin{theorem}
+%    $\#3-SAT_D \in IP$
+%\end{theorem}
+%
+%\begin{corollary}
+%    $UNSAT \in IP$
+%\end{corollary}
+%
+%We convert a 3-CNF formula $\Phi (x_1, \dots, x_n)$
+%
+%% (formula) Ne vem ce je potrebno ...
+%
+%to a polynomial $f_{\Phi} (x_1, \dots, x_n)$
+%
+%The number of satisfying assignments of $\Phi$ is
+%
+%\begin{equation*}
+%    \sum_{b_1 \in \{0, 1}\} \sum_{b_2 \in \{0, 1}\} \dots \sum_{b_n \in \{0, 1}\} f_{\Phi} (b_1, b_2, \dots, b_n)
+%\end{equation*}
+%
+%We cant efficiently compute the sum, because it is a sum over $2^n$ vectors.
+%
+%P sends V a prime p in the range $(2^{|\Phi|}, 2^{|\Phi|+1})$.
+%V verifies that p is prime (e.g. by AKS algorithm). If not reject.
+%If p is prime V asks P to convince it that (formula).
+%
+%Interlude: Checking the value of polynomials over $FF_p$ ([p]).
+%
+%An $\epsilon$-error value checker for a polynomial $g(x_1, \dots, x_n)$ of degree $\leq d$ is IP that takes $n$ values $a_1, \dots, a_n, c \in [p]$
+%as input and satisfies:
+%completeness if $g(x_1, \dots, x_n) = c$ then the interaction accepts with prob 1
+%soundness : if $g(x_1, \dots, x_n) \neq c$ then for any P* the interaction accepts with prob $\leq \epsilon$.
+%
+%\begin{lemma}
+%    If $G(x_1, \dots, x_n)$ of degree d has a k-round (of P) $\epsilon$-error value checker then
+%    $g'(x_1, \dots, x_{n-1}) = \sum_{x_n \in \{0, 1\}} g(x_1, \dots, x_n)$ has a (k+1)-round
+%    $(\epsilon + \frac{d}{p})$-value checker.
+%\end{lemma}
+%
+%\begin{proof}
+%    We have the following protocol for $a_1, \dots, a_{n-1}, c$. To verify $g'$ = c: $\sum_{x_n \in \{0, 1\}} g(a_1, \dots, a_{n-1}, x_n) = c$:
+%    P sends V the at most d + 1 coefficients for the univarate polynomial $h(x_n) = g(a_1, \dots, a_{n-1}, x_n)$
+%    V checks if $h(0) + h(1) = c$. If not reject:
+%    chooses random $a_n \in [p]$, sends this to p
+%    (PV)* Follow the assumed IP to check if $h(a_n) = g(a_1, \dots, a_{n-1}, a_n)$
+%
+%    Complete the protocol using the $n$-rounds of P IP provided by $n$ iterations of the lemma above starting with deterministic ptime verifier that
+%    $f_{\Phi} (a_1, \dots, a_n) = c$ (which is a 0-round 0-error value checker)
+%\end{proof}
+%
+%
+%\subsection{Theorem: $TQBF \in IP$}
+%\begin{theorem}
+%    $TQBF \in IP$
+%\end{theorem}
+%A major result. See notes: christmas reading. See textbook.
+%\subsection*{Corollary $PSPACE \subseteq IP$}
+%If $L \in IP$ and $L' \leq_p L$ it is easy to show that $L' \in IP$.
+%
+%As a consequence $TQBF \in IP \implies PSPACE \subseteq IP$
+%
+%
+%
+%
+%
+%
+%
+%\newpage
+%% 8.1.2024
+%% nadaljevanje od zadnjic
+%Goal of first hour: Complete proof that $IP = PSPACE$.
+%
+%Last lecture:
+%\begin{itemize}
+%    \item $IP \subseteq PSPACE$
+%    \item To show $PSPACE \subseteq IP$ it suffies to show $TQBF \in IP$
+%    \item We showed as a warm-up: $3-SAT \in IP$
+%\end{itemize}
+%
+%\subsection{$TQBF \in IP$}
+%We need an IP to convince us of the truth of a formula
+%\begin{equation*}
+%    Q_1 x_1 \dots Q_n x_n \Psi (x_1, \dots, x_n)
+%\end{equation*}
+%where $\Psi$ is in 3-CNF.
+%
+%First idea (as for $3-SAT$) we 'arithmetise' instead of 
+%\begin{equation*}
+%    \forall x_1 \exists x_2 \forall x_3 \exists x_4 \Psi (x_1, x_2, x_3, x_4)
+%\end{equation*}
+%(is true iff)
+%Consider
+%\begin{equation*}
+%    \prod_{x_1 \in \{0, 1\}} \sum_{x_2 \in \{0, 1\}} \prod_{x_3 \in \{0, 1\}} \sum_{x_4 \in \{0, 1\}} f_\Psi (x_1, x_2, x_3, x_4)
+%\end{equation*}
+%$ \neq 0$
+%e.g. if $\Psi$ is $(x_1 \lor \neg x_2 \lor x_3) \land (\neg x_1 \lor x_2)$ then
+%\begin{equation*}
+%    f_\Psi (1 - ((1 - x_1) \cdot x_2 \cdot (1 - x_3))) \cdot (1 - x_1 (1 - x_2))
+%\end{equation*}
+%
+%Issues with using $\sum, \prod$ expansion
+%\begin{itemize}
+%    \item Result value is bounded by $2^{2^n}$ rather than $2^n$
+%    \item the intermediate steps of the protocol involve multiplying polynomials and the degree is not polynomialy bounded.
+%\end{itemize}
+%
+%To address the first problem we replace 
+%\begin{equation*}
+%    \sum_{b \in \{0, 1\}} a_b
+%\end{equation*}
+%with
+%\begin{equation*}
+%   \coprod_{b \in \{0, 1\}} a_b = a_0 + a_1 - a_0 a_1 %(prod mora biti obrnjen na glavo)
+%\end{equation*}
+%This coincides with disjunction on values $a_b \in \{0, 1\}$.
+%
+%We change formula from up to this:
+%\begin{equation*}
+%    \prod_{x_1 \in \{0, 1\}} \coprod_{x_2 \in \{0, 1\}} \prod_{x_3 \in \{0, 1\}} \coprod_{x_4 \in \{0, 1\}} f_\Psi (x_1, x_2, x_3, x_4)
+%\end{equation*}
+%
+%To address the second problem, use the observation for $x \in \{0, 1\}$
+%\begin{equation*}
+%    x = x^2 = x^3 = x^4 = \dots
+%\end{equation*}
+%Given a polynomial $f(x_1, \dots, x_n)$
+%
+%Consider
+%\begin{align*}
+%    L_i(f) =& x_i \cdot f(x_1, \dots, x_{i-1}, 1, x_{i+1}, \dots, x_n) \\
+%           +& (1 - x_i) \cdot f(x_1, \dots, x_{i-1}, 0, x_{i+1}, \dots, x_n)
+%\end{align*}
+%
+%$L_i(f)$ agrees with $f$ on $x_i \in \{0, 1\}$ and is linear in $x_i$, $deg(L_i(f)) \leq deg(f) + 1$.
+%The degree of all variables other than $x:i$ is unchanged
+%
+%Instead, we consider:
+%\begin{equation*}
+%    \prod_{x_1} L_1 \coprod_{x_2} L_1 L_2 \prod_{x_3} L_1 L_2 L_3 \coprod_{x_4} L_1 L_2 L_3 L_4 f_\Psi(x_1, x_2, x_3, x_4) = 1
+%\end{equation*}
+%degree is always bounded by $max(3m + n - 1, 2n)$. We get $\mathscr{O}(n^2)$
+%
+%IP protocol for $Q_1 x_1 \dots Q_n x_n \Psi = 1$
+%
+%P sends V a large enough prime p (to keep error small)
+%
+%V verifies that p is prime (else reject)
+%asks P to convince it that
+%\begin{equation*}
+%    \prod_{x_1} L_1 \prod_{x_2} L_1 L_2 \dots \prod_{x_n} L_1 \dots L_n f_\Psi (x_1, \dots, x_n) = 1 %\prod je hkrati prod in amalg  
+%\end{equation*}
+%This is done using $\frac{n (n + 3)}{2}$ rounds of interaction using protocols for each operator.
+%
+%\begin{lemma}
+%    If we have a polynomial $g(x_1, \dots, x_n)$ of degree $\leq d$ has a k-rounds $\epsilon$-error value checker.
+%    Then 
+%    \begin{equation*}
+%        g_{L_i} (x_1, \dots, x_n) = L_i(g)
+%    \end{equation*}
+%    has a (k+1)-rounds $(\epsilon + \frac{d}{p})$-error value checker.
+%\end{lemma}
 
 
 \newpage
-% 8.1.2024
-% nadaljevanje od zadnjic
-Goal of first hour: Complete proof that $IP = PSPACE$.
-
-Last lecture:
-\begin{itemize}
-    \item $IP \subseteq PSPACE$
-    \item To show $PSPACE \subseteq IP$ it suffies to show $TQBF \in IP$
-    \item We showed as a warm-up: $3-SAT \in IP$
-\end{itemize}
-
-\subsection{$TQBF \in IP$}
-We need an IP to convince us of the truth of a formula
-\begin{equation*}
-    Q_1 x_1 \dots Q_n x_n \Psi (x_1, \dots, x_n)
-\end{equation*}
-where $\Psi$ is in 3-CNF.
-
-First idea (as for $3-SAT$) we 'arithmetise' instead of 
-\begin{equation*}
-    \forall x_1 \exists x_2 \forall x_3 \exists x_4 \Psi (x_1, x_2, x_3, x_4)
-\end{equation*}
-(is true iff)
-Consider
-\begin{equation*}
-    \prod_{x_1 \in \{0, 1\}} \sum_{x_2 \in \{0, 1\}} \prod_{x_3 \in \{0, 1\}} \sum_{x_4 \in \{0, 1\}} f_\Psi (x_1, x_2, x_3, x_4)
-\end{equation*}
-$ \neq 0$
-e.g. if $\Psi$ is $(x_1 \lor \neg x_2 \lor x_3) \land (\neg x_1 \lor x_2)$ then
-\begin{equation*}
-    f_\Psi (1 - ((1 - x_1) \cdot x_2 \cdot (1 - x_3))) \cdot (1 - x_1 (1 - x_2))
-\end{equation*}
-
-Issues with using $\sum, \prod$ expansion
-\begin{itemize}
-    \item Result value is bounded by $2^{2^n}$ rather than $2^n$
-    \item the intermediate steps of the protocol involve multiplying polynomials and the degree is not polynomialy bounded.
-\end{itemize}
-
-To address the first problem we replace 
-\begin{equation*}
-    \sum_{b \in \{0, 1\}} a_b
-\end{equation*}
-with
-\begin{equation*}
-   \coprod_{b \in \{0, 1\}} a_b = a_0 + a_1 - a_0 a_1 %(prod mora biti obrnjen na glavo)
-\end{equation*}
-This coincides with disjunction on values $a_b \in \{0, 1\}$.
-
-We change formula from up to this:
-\begin{equation*}
-    \prod_{x_1 \in \{0, 1\}} \coprod_{x_2 \in \{0, 1\}} \prod_{x_3 \in \{0, 1\}} \coprod_{x_4 \in \{0, 1\}} f_\Psi (x_1, x_2, x_3, x_4)
-\end{equation*}
-
-To address the second problem, use the observation for $x \in \{0, 1\}$
-\begin{equation*}
-    x = x^2 = x^3 = x^4 = \dots
-\end{equation*}
-Given a polynomial $f(x_1, \dots, x_n)$
-
-Consider
-\begin{align*}
-    L_i(f) =& x_i \cdot f(x_1, \dots, x_{i-1}, 1, x_{i+1}, \dots, x_n) \\
-           +& (1 - x_i) \cdot f(x_1, \dots, x_{i-1}, 0, x_{i+1}, \dots, x_n)
-\end{align*}
-
-$L_i(f)$ agrees with $f$ on $x_i \in \{0, 1\}$ and is linear in $x_i$, $deg(L_i(f)) \leq deg(f) + 1$.
-The degree of all variables other than $x:i$ is unchanged
-
-Instead, we consider:
-\begin{equation*}
-    \prod_{x_1} L_1 \coprod_{x_2} L_1 L_2 \prod_{x_3} L_1 L_2 L_3 \coprod_{x_4} L_1 L_2 L_3 L_4 f_\Psi(x_1, x_2, x_3, x_4) = 1
-\end{equation*}
-degree is always bounded by $max(3m + n - 1, 2n)$. We get $\mathscr{O}(n^2)$
-
-IP protocol for $Q_1 x_1 \dots Q_n x_n \Psi = 1$
-
-P sends V a large enough prime p (to keep error small)
-
-V verifies that p is prime (else reject)
-asks P to convince it that
-\begin{equation*}
-    \prod_{x_1} L_1 \prod_{x_2} L_1 L_2 \dots \prod_{x_n} L_1 \dots L_n f_\Psi (x_1, \dots, x_n) = 1 %\prod je hkrati prod in amalg  
-\end{equation*}
-This is done using $\frac{n (n + 3)}{2}$ rounds of interaction using protocols for each operator.
-
-\begin{lemma}
-    If we have a polynomial $g(x_1, \dots, x_n)$ of degree $\leq d$ has a k-rounds $\epsilon$-error value checker.
-    Then 
-    \begin{equation*}
-        g_{L_i} (x_1, \dots, x_n) = L_i(g)
-    \end{equation*}
-    has a (k+1)-rounds $(\epsilon + \frac{d}{p})$-error value checker.
-\end{lemma}
-
-
-
 % Od tu naprej za vse
 \section{Complexity classes}
-Decision problems are represented by functions $\Sigma^* \to \{0, 1\}$.
-
-We have lots of complexity classes for such functions.
-
+Decision problems are represented by functions $\Sigma^* \to \{0, 1\}$. We have lots of complexity classes for such functions.
 Today some complexity classes for more general functions $\Sigma_1^* \to \Sigma_2^*$.
 
 \subsection{FP (Function polytime)}
@@ -1805,7 +1805,7 @@ computes $f$ and a polynomial $p(n)$ such that
 \end{equation*}
 
 \begin{remark}
-    It follows that $|f(w)| \leq p(|w|)$
+    If $f \in FP$ then there exsists a polynomial $p(n)$ such that $\forall w \in \Sigma_1^*$ $|f(w)| \leq p(|w|)$.
 \end{remark}
 
 (We already used this in polytime reducibility.)
@@ -1816,59 +1816,68 @@ computes $f$ and a polynomial $p(n)$ such that
         f: \Sigma^* \to \N \\
         f: \N \to \Sigma^*
     \end{gather*}
-    are in FP if in FP with respect to binary representation of numbers.
+    We say $f$ is in FP if function that maps binary representations of n to binary frpresentations of $f(n)$ is in FP.%are in FP if in FP with respect to binary representation of numbers.
 \end{remark}
 
 \subsection{Counting problems}
 Counting problems provide an interesting class of computationally interesting functions.
 
-\subsubsection{$\#$SAT}
-\begin{equation*}
-    \#SAT: \Sigma_{PROP}^* \to \N
-\end{equation*}
+\subsection{Some examples}
 
-$\#SAT(\Phi) =$ the number of satisfying assignments for $\Phi$.
+\begin{itemize}
+    \item $\#SAT: \Sigma_{PROP}^* \to \N$
+    \begin{equation*}
+        \#SAT(\Phi) = \text{number of satisfying assignments for } \Phi
+    \end{equation*}
+    \item $\#3COL: \Sigma_{Graph}^* \to \N$
+    \begin{equation*}
+        \#3COL(G) = \text{number of 3-colourings of } G
+    \end{equation*}
+\end{itemize}
 
-\subsubsection{$\#$3Col}
-\begin{equation*}
-    \#3Col: \Sigma_{Graph}^* \to \N
-\end{equation*}
-
-$\#3Col(G) =$ the number of 3-colourings of G.
 
 \subsubsection{$\#$P}
 ``Sharp P''
 
 A function $f: \Sigma^* \to \N$ belongs to $\#$P if there exsists a deterministic polytime M
-and polynomial p s.t.
+and polynomial $p$ s.t.
 \begin{equation*}
-    f(w) = |\{v \in \Sigma^{p(|w|)} | M(w, v) \text{ accepts}\}|
+    f(w) = |\{v \in \Sigma^{p(|w|)} | M(w, v) \text{ \textbf{accept}s}\}|
 \end{equation*}
 
-cf. the certificate def. of NP.
+Recall: $L \in NP$ iff $\exists$ deterministic polytime TM M and polynomial $p$ s.t.
 \begin{equation*}
-    w \in L \iff \exists v \in \Sigma^{p(|w|)} . M(u, v) \text{ accepts}
+    w \in L \iff \exists v \in \Sigma^{p(|w|)} . M(u, v) \text{ \textbf{accept}s}
 \end{equation*}
+(the certificate definition of NP)
 
 \begin{remark}
     Obvious that $\#$SAT $\in$ $\#$P, $\#$3COL $\in$ $\#$P ...
 \end{remark}
 
-Fact: FP $\subseteq$ $\#$P
+Fact: FP $\subseteq$ $\#P$
 
-Proposition: FP = $\#$P $\implies$ P = NP
+Proposition: if $FP = \#P$ then $P = NP$.
 
 \begin{proof}
-    Suppose $\#$SAT $\in$ FP. Then we have a P decision procedure for SAT
+    Suppose $\#$SAT $\in$ FP. Then we have a P decision procedure for SAT.
 
     Input: $\Phi$
     Output: $\#$SAT($\Phi$) $\neq 0$
 
     It is atleast as hard to count certificates as is it to check if a certificate exsists.
-
-    More interesting:
-    sometimes it is strictly harder to count certificates then to check if a certificate exsists. (assuming p $\neq$ NP)
 \end{proof}
+
+(In words:)
+\begin{proof}
+    If $FP = \#P$ then we have a deterministic polytime algorithm for counting the number of satisfying assignments of a propositional formula $\Phi$.
+    By accepting if this number $\neq 0$ and rejecting if this number $= 0$ we obtain a deterministic polytime decision procedure for SAT.
+\end{proof}
+
+More interesting:
+    sometimes it is strictly harder to count certificates then to check if a certificate exsists. (assuming $P \neq NP$)
+
+\subsection{Cycles in directed graphs}
 
 Input is a directed graph G.
 
@@ -1876,6 +1885,8 @@ The decision problem CYCLE:
 \begin{itemize}
     \item does G have a (directed) cycle?
 \end{itemize}
+This is in $P$ (actually solvable in linear time).
+
 
 The counting problem $\#$CYCLE:
 \begin{itemize}
@@ -1884,22 +1895,23 @@ The counting problem $\#$CYCLE:
 
 (a simple directed cycle of length $n$ is a sequence $v_0 \to v_1 \to ... \to v_{n-1} \to v_0$ in which no vertex appears twice)
 
-\begin{proposition}
-    \begin{enumerate}
-        \item CYCLE $\in$ P
-        \item If $\#$CYCLE $\in$ FP then P = NP
-    \end{enumerate}
-\end{proposition}
+Proposition:
+\begin{enumerate}
+    \item $CYCLE \in P$
+    \item If $\#CYCLE \in FP$ then $P = NP$
+\end{enumerate}
+
 
 \begin{proof}
+    We will proove each part individually.
     \begin{enumerate}
         \item By depth-first search
         \item We prove that if $\#$CYCLE $\in$ FP then HAM $\in$ $P$
-        Since HAM is NP-complete, P = NP.
+        Since HAM is NP-complete, $P = NP$.
 
         Suppose we have an FP algorithm for $\#$CYCLE. We'll define a P procedure for HAM.
 
-        Let G with $n$ vertices be an input graph. Construct a graph G' by replacing every vertex $w$ in G with the following gadget:
+        Let G with $n$ vertices be an input graph. Construct a graph G' by replacing every vertex $w$ in G with the following gadget: (not included, see images on moodle)
 
         % (slikca)
 
@@ -1920,10 +1932,10 @@ The counting problem $\#$CYCLE:
 
         \begin{align*}
             n^{n-1} \cdot 2^{m (n-1)} =& n^{n-1} \cdot 2^{n \lceil log_2 n \rceil (n-1)} \\
-                                      =& n^{n-1} \bar{n}^{n (n - 1)}
-                                      \leq& \bar{n}^{(n-1) + n (n-1)}
-                                      =& \bar{n}^{n^2 - 1}
-                                      <& \bar{n}^{n^2}
+                                      =& n^{n-1} \bar{n}^{n (n - 1)} \\
+                                      \leq& \bar{n}^{(n-1) + n (n-1)} \\
+                                      =& \bar{n}^{n^2 - 1} \\
+                                      <& \bar{n}^{n^2} \\
                                       =& 2^{n^2 \lceil log_2 n \rceil} 
         \end{align*}
 
@@ -1955,9 +1967,9 @@ A function $f$ is $\#$P-hard if, for every $g \in \#P, g \in FP^f$.
 $f$ is $\#$P-complete if $f \in \#P$ and $f$ is $\#$P-hard.
 
 \begin{theorem}
-    $\#$SAT is $\#$P-complete.
+    $\#SAT$ is $\#P$-complete.
 \end{theorem}
-
+(no proof)
 
 
 
@@ -1992,7 +2004,7 @@ given an oracle solving smaller instances.
 \begin{equation*}
     det(\begin{bmatrix}
         3 & 1 & 4 \\
-        1 & 5 & 4 \\
+        1 & 5 & 9 \\
         2 & 6 & 5
     \end{bmatrix})
     =
@@ -2013,7 +2025,7 @@ given an oracle solving smaller instances.
 \begin{equation*}
     perm(\begin{bmatrix}
         3 & 1 & 4 \\
-        1 & 5 & 4 \\
+        1 & 5 & 9 \\
         2 & 6 & 5
     \end{bmatrix})
     =
@@ -2043,11 +2055,14 @@ In contrast.
     Computing the permanent of a $\{0, 1\}$-matrix is $\#$P-complete.
 \end{theorem}
 
-The decision problem: does a perfect matching exist is in P.
-The counting problem: how many perfect matchings are there is $\#$P-complete.
-The decision problem: given $B$ and $N$ does $B$ have $N$ perfect matchings is in PSPACE and has a nice IP.
+A word about problems:
+\begin{itemize}
+    \item The decision problem: ``does a perfect matching exist'' is in P.
+    \item The counting problem: ``how many perfect matchings are there'' is $\#$P-complete.
+    \item The decision problem: ``given $B$ and $N$ does $B$ have $N$ perfect matchings'' is in PSPACE and has a nice IP.
+\end{itemize}
 
-If perm is in FP then P = NP.
+If $perm$ is in FP then P = NP.
 
 \begin{theorem}
     (Toda)
@@ -2088,14 +2103,20 @@ The modern version replaces $(1 - \frac{1}{3n})$  with any constant $c > \frac{1
     \end{itemize}
 \end{proof}
 
-`I find my daughters mathematics really difficult. I wish they did some proofs.'
+\begin{center}
+    \enquote{\textit{I find my daughter's mathematics really difficult. \\
+    I wish they did some proofs.}}\\ 
+    \hfill -- prof. dr. Alexander Keith Simpson, \\
+    \hfill 15. 1. 2024
+\end{center}
+
 
 If we have an algorithm $M$ for $perm$
 \begin{equation*}
     Avgtime(n) = E_{A \in F^{(n \times n)}} (\text{time taken by M on matrix A})
 \end{equation*}
 
-If Avgtime(n) is $\mathscr{O}(p(n))$ (p a polynomial) then there exsists a ptime 
+If $Avgtime(n)$ is $\mathscr{O}(p(n))$ ($p$ a polynomial) then there exsists a ptime 
 algorithm that correctly computes the permanent on a $\frac{2}{3}$ fraction of all inputs. 
 
 Then by (modern version of theorem) $perm \in P$.
@@ -2111,7 +2132,7 @@ The above algorithm is correct on $> \frac{2}{3}$ fraction of inputs.
     There exists a probabilistic algorithm what given an $(n \times n)$-matrix $A \in \N^{n \times n}$ 
     and $\epsilon, \delta$ satisfies 
     \begin{equation*}
-        Pr [\frac{|\text{result algorithm } - perm(A)}{perm(A)} < \epsilon] \geq 1 - \delta
+        Pr [\frac{|\text{result algorithm } - perm(A)|}{perm(A)} < \epsilon] \geq 1 - \delta
     \end{equation*}
 
     whose computation time is polynomial in $n$, $log(\delta^{-1})$, $\epsilon^{-1}$.
@@ -2123,11 +2144,5 @@ The above algorithm is correct on $> \frac{2}{3}$ fraction of inputs.
         \item the hidden constants and order of the polynomial are large.
     \end{itemize}
 \end{theorem}
-
-
-
-
-
-
 
 \end{document}
