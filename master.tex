@@ -367,12 +367,12 @@ We assume an input alphabet $\Sigma \subseteq \Gamma \setminus \{\square\}$.
 
 (A language is a subset $L \subseteq \Sigma^*$)
 
-We also assume distinguisged halting states accept, reject $\in Q$.
+We also assume distinguished halting states \textbf{accept}, \textbf{reject} $\in Q$.
 
 A TM M decides the language $L$ if for any input word $w \in \Sigma^*$
 \begin{itemize}
-    \item if $w \in L$ then M halts in the accept state on input $w$.
-    \item if $w \notin L$ then M halts in the reject state on input $w$.
+    \item if $w \in L$ then M halts in the \textbf{accept} state on input $w$.
+    \item if $w \notin L$ then M halts in the \textbf{reject} state on input $w$.
 \end{itemize}
 
 A language is decideable, if there exist a TM M that decides it.
@@ -381,7 +381,7 @@ A language is decideable, if there exist a TM M that decides it.
 Assume an input alphabet $\Sigma_1$ and optput alphabet $\Sigma_2$ with $\Sigma_1, \Sigma_2 \subseteq \Gamma \setminus \{\square\}$.
 A TM M computes a function $f: \Sigma_1^* \to \Sigma_2^*$ if
 \begin{itemize}
-    \item for any $q \in \Sigma_1^*$, when given $w$ as input M eventually halts with $f(w)$ on the tape.
+    \item for any $w \in \Sigma_1^*$, when given $w$ as input M eventually halts with $f(w)$ on the tape.
     \item $f$ is computable if there exists a TM that computes $f$.
 \end{itemize}
 
@@ -419,7 +419,7 @@ We execute the machine in the ``natural way'' as in the example (not written).
     \end{equation*}
 \end{definition}
 
-Equivalent between machine models proved by translations between models. Such translations do not preserve $DTime(T(n))$. But 
+Equivalent between machine models prooved by translations between models. Such translations do not preserve $DTime(T(n))$. But 
 all translations are polynomially bounded in space and time. So the class $P$ is invarient under choice of computational model.
 
 
@@ -450,16 +450,16 @@ NTMs potentially have many different runs from the same starting configuration.
 
 \subsection{NTMs as language recognisers}
 
-Assume input alphabet $\Sigma \subseteq \Gamma \setminus \{\square\}$ and halting states $accept, reject \in \Q$
+Assume input alphabet $\Sigma \subseteq \Gamma \setminus \{\square\}$ and halting states \textbf{accept}, \textbf{reject} $\in \Q$
 
-An NTM M accepts a word $w \in \Sigma^*$ if there exists a run of M on input $w$ that terminates in accept.
+An NTM M \textbf{accept}s a word $w \in \Sigma^*$ if there exists a run of M on input $w$ that terminates in \textbf{accept}.
 
-An NTM M rejects a word $w \in \Sigma^*$ if every run of input $w$ terminates in reject.
+An NTM M \textbf{reject}s a word $w \in \Sigma^*$ if every run of input $w$ terminates in \textbf{reject}.
 
 An NTM M decides the language $L \subseteq \Sigma^*$ if for every $q \in \Sigma^*$:
 \begin{itemize}
-    \item if $w \in L$ then M accepts w
-    \item if $w \notin L$ then M rejects w
+    \item if $w \in L$ then M \textbf{accept}s w
+    \item if $w \notin L$ then M \textbf{reject}s w
 \end{itemize}
 
 
@@ -483,7 +483,7 @@ because every deterministic TM is nondeterministic.
 
 Big question is:
 \begin{equation*}
-    P = NP
+    P \stackrel{?}{=} NP
 \end{equation*}
 
 \begin{example}
@@ -524,12 +524,13 @@ Big question is:
 
     For each pair of 1s on the second tape, check that there is a $0$ in the relevant entry in the adjacency matrix on the first tape. $\mathscr{O}(m^4)$
 
-    If so, we accept (otherwise reject)
+    If so, we \textbf{accept} (otherwise \textbf{reject})
 
     The time bound is $\mathscr{O}(m^4)$, ie $\mathscr{O}(n^2)$ (because of input is $m^2$)
 \end{example}
 
 \begin{theorem}[Certificate chatacterisation of NP]
+
     T.f.a.e. for $L \subseteq \Sigma^*$
     \begin{enumerate}
         \item $L \in NP$
@@ -574,7 +575,7 @@ This intuition is embodied in the certificate characterisation of LP.
 \section{Meet some NP problems}
 All these problems are in fact NP-complete.
 
-Main theorem today: Levin theorem: SAT is NP-complete.
+Main theorem today: Cook-Levin theorem: SAT is NP-complete.
 
 Important today: the notions of NP hardness, polynomial time reducibility.
 
@@ -598,7 +599,7 @@ We call $v$ a satisfying assignment for $\phi$.
 
 \begin{example}
     $(u \land u') \lor (u \land u'') \lor (u' \land u'')$
-    This is satisfiable. $v$ is a satisfying assignment $\equiv$ if maps at least two variables to 1.
+    This is satisfiable. $v$ is a satisfying assignment $\iff$ if maps at least two variables to 1.
 \end{example}
 
 \begin{example}
@@ -612,7 +613,7 @@ The SAT problem:
     \item Question: is $\phi$ satisfiable?
 \end{itemize}
 
-We represent SAT as a language over the aplhabet $\sigma_{SAT} = \{0, 1, \land, \lor, \neg, u, '\}$
+We represent SAT as a language over the alphabet $\sigma_{SAT} = \{0, 1, \land, \lor, \neg, u, '\}$
 
 \begin{equation*}
     u \land (u'' \lor u''') \phi
@@ -668,13 +669,13 @@ $L$ is NP hard, if for any NP language L' we have $L' \leq_p L$.
 
 $L$ is NP complete, if $L \in NP$ and L is NP hard.
 
-\begin{theorem}[Cook/Levin]
+\begin{theorem}[Cook-Levin]
     SAT is NP complete.
 \end{theorem}
 
 \subsection{3-SAT}
 
-A \underline{literal} is a propositional vaiable $u_i$ or its negation $\neg u_i$.
+A \underline{literal} is a propositional variable $u_i$ or its negation $\neg u_i$.
 
 A \underline{clause} is a disjunction $l_1 \lor \dots \lor l_k$ of literals.
 
@@ -748,7 +749,7 @@ A formula is in \underline{3-CNF} if it is a conjunction $D_1 \land \dots \land 
 
 \subsection{3-COL}
 
-Given a cojnunction of 3-clauses $\phi$. Convert it to a graph that is 3-colourable iff $\phi$ is satisfiable.
+Given a conjunction of 3-clauses $\phi$. Convert it to a graph that is 3-colourable iff $\phi$ is satisfiable.
 
 Suppose $\phi$ has variables up to $u_k$.
 
@@ -767,7 +768,7 @@ Suppose $\phi$ has variables up to $u_k$.
     Given an input word $w \in \Sigma$ we construct a propositional formula $\Phi_w$ such that
     \begin{align*}
         \Phi_w  \text{ satisfiable} \iff& \text{there exists a run of M' on input w} \\
-                                       &\text{that is in the accept state after } p(|w|) \text{ step } \\
+                                       &\text{that is in the \textbf{accept} state after } p(|w|) \text{ step } \\
                                    \iff& w \in L
     \end{align*}
 
@@ -782,7 +783,7 @@ Suppose $\phi$ has variables up to $u_k$.
     \end{itemize}
 
     Define $\Phi_w$ in such a way that its satiyfying assignments are in correspondence with runs of length
-    (time steps) $p(|w|)$ that end in accept state.
+    (time steps) $p(|w|)$ that end in \textbf{accept} state.
 
     We break its definition into parts.
 
@@ -864,7 +865,7 @@ Measure how much working space a TM needs to use (not including space taken by t
 
 Assume TMs have a separate input tape with a read-only head and K working tapes with read-write heads.
 
-$\text{SPACE}_M(n) = \max\{ \text{total number of spaces vidited by working tape heads on run } r | \\ 
+$\text{SPACE}_M(n) = \max\{ \text{total number of spaces visited by working tape heads on run } r | \\ 
 w \in \Sigma^*, |w| = n, e \text{ is a run of M on input } w\}$
 
 $L \in DSpace(T(n))$: deterministic TM M that decides for language such that 
@@ -887,26 +888,26 @@ $L \in NSpace(T(n))$: nondeterministic TM M that decides for language such that
 
 Logaritmic space:
 \begin{equation*}
-    L = DSPACE(Log(n))
+    L = DSpace(\log(n))
 \end{equation*}
 
 Nondeterministic logaritmic space:
 \begin{equation*}
-    NP = NSPACE(Log(n))
+    NP = NSpace(\log(n))
 \end{equation*}
 
 
 Proposition: NP $\subseteq$ PSPACE
 
 \begin{proof}
-    Suppose $L \in NP$. By the certificate characterisation of NP there exists a deterministic PTime TM M
-    and a polynomial $p(n): \N \to \N$, s.t. $w \in L \iff \exists v \Sigma^{p(n)}$ M accepts w.v.
+    Suppose $L \in NP$. By the certificate characterisation of NP there exists a deterministic ptime TM M
+    and a polynomial $p(n): \N \to \N$, s.t. $w \in L \iff \exists v \Sigma^{p(n)}$ M \textbf{accept}s w.v.
 
     We adapt M to a deterministic polyspace TM for L.
 
     Adapted machine:
-    If $w \in \Sigma^n$ is on input tape repeat for every $v \in \Sigma^{p(n)}$ on working tape we write w.v run M on input on working tape, accept 
-    w if M accepts w.v. If no certificate is found, at end reject.
+    If $w \in \Sigma^n$ is on input tape repeat for every $v \in \Sigma^{p(n)}$ on working tape we write w.v run M on input on working tape, \textbf{accept} 
+    w if M \textbf{accept}s w.v. If no certificate is found, at end \textbf{reject}.
 
     Takes exponential time but only polynomial space.
 \end{proof}
@@ -1021,7 +1022,7 @@ Proposition: TQBF $\in$ PSPACE
 
 Proof idea illustrated using one example.
 
-Input: $\forall u \exists v (u \cap v) \cup (\neg u \cap \neg v)$
+Input: $\forall u \exists v (u \land v) \lor (\neg u \land \neg v)$
 
 L is PSPACE hard, if for every PSPACE language $L'$ $L' \leq_p L$.
 L is NPSPACE hard, if for every NPSPACE language $L'$ $L' \leq_p L$.
@@ -1041,7 +1042,8 @@ Corollary: PSPACE = NPSPACE
 
 Suppose $L$ is decided by a nondeterministic TM M where space is bounded by $p(n)$ polynomial.
 
-For convenience assume that the machine M loops on the accept, and only ever accepts after erasing all data on the working tapes and reset head positions.
+For convenience assume that the machine M loops on the \textbf{accept}, and only ever \textbf{accept}s after erasing all data on the working tapes
+ and reset head positions.
 
 We define the configuration graph of M run on an input word w. Vertices are configurations:
 \begin{itemize}
@@ -1050,7 +1052,7 @@ We define the configuration graph of M run on an input word w. Vertices are conf
     \item $v_1, \dots, v_k \in \Gamma^{p(|w|)}$ representing the relevant data on the K working tape + K head positions. 
 \end{itemize}
 
-Such a configuration $c$ can be encoded by word ``c'' $\in \{0, 1\}^{a p(|w|)}$
+Such a configuration $c$ can be encoded by word ``c'' $\in \{0, 1\}^{a \cdot p(|w|)}$
 
 The edges in the graph $c \to c'$ if M can make one step of computation from configuration $c$ to configuration $c'$.
 
@@ -1077,7 +1079,7 @@ Given this we are done, because the required ptime reduction from $L$ to TQBF is
     $\iff$ $\exists$ path of length $2^N$ from start to accept configuration \\
     $\iff$ $\exists$ path from start to accept configuration \\
     $\iff$ $w \in L$
-    \item The closed formula $\Psi_N (\ulcorner start \urcorner, \ulcorner accept \urcorner)$ has size polynomial in $N = cp(|w|)$ hence polynomial in $|w|$
+    \item The closed formula $\Psi_N (\ulcorner start \urcorner, \ulcorner accept \urcorner)$ has size polynomial in $N = c \cdot p(|w|)$ hence polynomial in $|w|$
 \end{itemize}
 
 % Preveri, ce smo naredili se kaj
@@ -1114,7 +1116,7 @@ As a language
 
 For a graph G with k vertices such a truple has size $\mathscr{O}(k^2)$.
 
-Vertices are represented by words of size $\mathscr{O}(log k)$. This is also $\mathscr{O}(log n)$ when $n = \mathscr{O}(k^2)$.
+Vertices are represented by words of size $\mathscr{O}(\log k)$. This is also $\mathscr{O}(\log n)$ when $n = \mathscr{O}(k^2)$.
 
 Proposition: PATH $\in$ NL.
 
@@ -1124,15 +1126,15 @@ Proposition: PATH $\in$ NL.
     Algorithm (nondeterministic):
     \begin{itemize}
         \item Use two working tapes (A and B).
-        \item Start of algorithm given input G', s', t' 
-        \item Write s' on tape A and bin(1) on tape B.
+        \item Start of algorithm given input $G', s', t'$ 
+        \item Write s' on tape A and $bin(1)$ on tape B.
     \end{itemize}
 
-    *: At every successible step check tape A to see if t' is on tape A => if so accept.
+    *: At each step check tape A to see if $t'$ is on tape A => if so \textbf{accept}.
 
-    Check tape B to see if $bin(k)$ (no. of vertices in G) is on B => if so accept.
+    Check tape B to see if $bin(k)$ (no. of vertices in G) is on B => if so \textbf{accept}.
 
-    Otherwise consider the vertex v with $bin(v)$ on tape (A).
+    Otherwise consider the vertex $v$ with $bin(v)$ on tape (A).
 
     Nondeterministically choose a vertex $v'$ s.t. $v \to v'$ in G. Write $w''$ on tape A. increment counter on tape B. Go back to *
 
@@ -1159,7 +1161,7 @@ Notation:
 
     (Assume that M erases its working tapes and resets head position of the input tape before entering the accept state).
 
-    As last week consider the configuration graph of M on an input word w. Configurations have:
+    As last week consider the configuration graph of M on an input word $w$. Configurations have:
     \begin{itemize}
         \item a state $q \in q$
         \item $w$ on input tape + head position on input tape
@@ -1167,7 +1169,7 @@ Notation:
     \end{itemize}
 
     The space we need to represent an invividual configuration is $\mathscr{O}(log |w|)$. Any configuration $c$ can be represented
-    by $c' \in \{0, 1\}^{a \cdot log|w|}$ for some a.
+    by $c' \in \{0, 1\}^{a \cdot log|w|}$ for some $a$.
 
     The required logspace reduction $w \to G, s, t$ where:
     \begin{itemize}
@@ -1235,7 +1237,7 @@ When the machine is executed on an input word $w$ we either get
 
 If M is a PTM:
 
-Worst-case time: ($\equiv$ time for M as a NTM)
+Worst-case time: ($\iff$ time for M as a NTM)
 \begin{equation*}
     wtime_M(n) = \max \{\text{no. steps in the run r | r is a run of M on input w,} |w| = n\}
 \end{equation*}
@@ -1247,13 +1249,13 @@ More relevant is Expected time:
 \end{equation*}
 
 \begin{example}
-    Finding the k-th smallest element in an unsorted array.
+    Finding the $k$-th smallest element in an unsorted array.
 
-    Input: n numbers, k
+    Input: $n$ numbers, $k$
 
-    Output: find the k-th smallest $a_i$, ie the $k-th$ element if we sort $a_1, \dots, a_n$
+    Output: find the $k$-th smallest $a_i$, ie the $k$-th element if we sort $a_1, \dots, a_n$
 
-    An easy algorithm: sort the array, then select the k-th element from the array. Time complexity is $\mathscr{O}(n)$.
+    An easy algorithm: sort the array, then select the $k$-th element from the array. Time complexity is $\mathscr{O}(n)$.
 
     A probabilistic algorithm with expected time $O(n)$:
 
@@ -1299,8 +1301,8 @@ The Miller-Rabin property for prime numbers.
 
 If $p = 2^s \cdot d + 1$ is prime, where $d$ is odd, then for every number $a \in \{1, \dots, p-1$\} one of the following holds;
 \begin{itemize}
-    \item[a] $a^d \equiv 1 mod n$
-    \item[b] $a^{2^r \cdot d} \equiv -1 mod n$ for some $r \in \{0, \dots, s-1\}$
+    \item[a] $a^d \equiv 1 \mod n$
+    \item[b] $a^{2^r \cdot d} \equiv -1 \mod n$ for some $r \in \{0, \dots, s-1\}$
 \end{itemize}
 
 If $n = 2^s \cdot d + 1$ is composite ($d$ odd, $s \geq 1$), then at most $\frac{n}{4}$ of $a \in \{1, \dots, n'1\}$ satisfy one of (a) or (b) holds.
@@ -1322,14 +1324,14 @@ If repeated $k$ times the algorithm returns always \textbf{PROBABLY Prime}, then
 
 A PTM runs in expected polynomial time if there is a polynomial $p(n)$ such that $xtime_M(n) = \mathscr{O}(p(n))$.
 
-A PTM decides L with bounded error
+A PTM decides $L$ with bounded error
 \begin{itemize}
-    \item if on any input $w \in \Sigma^*$, M halts with probability 1 in either accept or reject.
-    \item if $w \in L$, P(M on $w$ halts in accept) $\geq \frac{2}{3}$
-    \item if $w \notin L$, then P(M on $w$ halts in reject) $\geq \frac{2}{3}$
+    \item if on any input $w \in \Sigma^*$, M halts with probability 1 in either \textbf{accept} or \textbf{reject}.
+    \item if $w \in L$, P(M on $w$ halts in \textbf{accept}) $\geq \frac{2}{3}$
+    \item if $w \notin L$, then P(M on $w$ halts in \textbf{reject}) $\geq \frac{2}{3}$
 \end{itemize}
 
-BPP = $\{L | $ there exists an expected ptime probabilistic TM that decides L with bounded error$\}$
+BPP = $\{L | $ there exists an expected ptime probabilistic TM that decides $L$ with bounded error$\}$
 
 
 
@@ -1365,7 +1367,7 @@ GNI is clearly in coNP but not known to be in NP.
 
 How can we ``certify'' that two graphs are not isomorphic?
 
-By considering interactive protocols it is possible for a prover that knows that 2 graphs are not isomorphic to convince a verifier
+By considering interactive protocols it is possible for a proover that knows that 2 graphs are not isomorphic to convince a verifier
 (that is polynomially time bounded but can use probability) of this fact with a probability of error that can be made arbitrarily small.
 
 This is an example of an interactive proof.
@@ -1376,9 +1378,14 @@ Assuming the 2 graphs are not isomorphic.
 \begin{enumerate}
     \item \textbf{V} picks a random $i \in \{1, 2\}$ by tossing a fair coin and a random permutation $\sigma$ on $\{1, 2, \dots, n\}$ with the uniform distribution.
         
-    \textbf{V} communicates $G_3 = \sigma (G_i)$ to the prover.
+    \textbf{V} communicates $G_3 = \sigma (G_i)$ to the proover.
 
-    \item \textbf{P} chooses $j$ where $j = 1$ if $G_3 = G_1$ else $2$ and communicates $j$ to \textbf{V}.
+    \item \textbf{P} chooses $j =$
+    \begin{itemize}
+        \item[1] if $G_3 \cong G_1$
+        \item[2] if $G_3 \cong G_2$  
+    \end{itemize}
+    and communicates $j$ to \textbf{V}.
     
     \item \textbf{V} \textbf{accept} if $j = i$ else \textbf{reject}.
 \end{enumerate}
@@ -1387,18 +1394,18 @@ In total:
 \begin{itemize}
     \item If the two graphs are not isomorphic then \textbf{V} \textbf{accept}s with probability $1$.
     \item If the two graphs are isomorphic irrespective of the algorithm that \textbf{P} uses for its part of the interaction.
-    \item $P(\textbf{accept}) = \frac{1}{2}$
+    \item If $G_1 \cong G_2$ $P(\textbf{accept}) = P(\textbf{reject})= \frac{1}{2}$
 \end{itemize}
 
 \subsection*{Completeness}
-There exists a behaviour of P such that if $G_1 \not \cong G_2$ then $P(\textbf{accept}) = 1$.
+There exists a behaviour of \textbf{P} such that if $G_1 \not \cong G_2$ then $P(\textbf{accept}) = 1$.
 
 \subsection*{Soundness}
-For any P that conforms to the protocol (returns $j \in \{1, 2\}$)
+For any \textbf{P} that conforms to the protocol (returns $j \in \{1, 2\}$):
 If $G_1 \cong G_2$ then $P(\textbf{reject}) = \frac{1}{2}$
 
 \subsection*{Argument}
-The input to P is a graph uniformly at random from the collection of graphs isomorphic to $G_1$ and $G_2$.
+The input to \textbf{P} is a graph uniformly at random from the collection of graphs isomorphic to $G_1$ and $G_2$.
 This gives no information about $i$.
 
 The chance of $j$ is independent of $i$. So $Pr(i \neq j) = \frac{1}{2}$.
@@ -1408,7 +1415,7 @@ The chance of $j$ is independent of $i$. So $Pr(i \neq j) = \frac{1}{2}$.
 
 \textbf{P} is any function $\Sigma^* \to \Sigma^*$.
 
-A K-round interaction on input word $w \in \Sigma^*$ is (k can depend on $w$):
+A $k$-round interaction on input word $w \in \Sigma^*$ is ($k$ can depend on $w$):
 
 \begin{itemize}
     \item \textbf{V} computes $r_1, v_1 = V(w)$
@@ -1866,7 +1873,7 @@ computes $f$ and a polynomial $p(n)$ such that
         f: \Sigma^* \to \N \\
         f: \N \to \Sigma^*
     \end{gather*}
-    We say $f$ is in FP if function that maps binary representations of n to binary frpresentations of $f(n)$ is in FP.%are in FP if in FP with respect to binary representation of numbers.
+    We say $f$ is in FP if function that maps binary representations of $n$ to binary representations of $f(n)$ is in FP.%are in FP if in FP with respect to binary representation of numbers.
 \end{remark}
 
 \subsection{Counting problems}
