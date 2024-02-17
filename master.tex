@@ -238,7 +238,7 @@ E.g. 3-colourability.
 
 It is an open question if there exists an efficient deterministic (random) algorithm for 3-colourability (or for k-colourabilits if $k \geq 3$).
 
-Equivalent statement: P = NP
+Equivalent statement: $P = NP$
 
 These statements are equivalent, because 3-colourability is NP-complete.
 
@@ -409,7 +409,7 @@ We execute the machine in the ``natural way'' as in the example (not written).
         time_M(n) = max \{\text{no. of steps taken by input }w: w \in \Sigma^*,  |w| = n\}
     \end{equation*}
 
-    For a language $L \subseteq \Sigma^*$ and a function $T: \N \to \N$ we say that $L \in DTime(T(n))$ if there exist $k-tape$ TM M for
+    For a language $L \subseteq \Sigma^*$ and a function $T: \N \to \N$ we say that $L \in DTime(T(n))$ if there exist $k$-tape TM M for
     some $k \geq 1$ that decides $L$ such that $time_M(n) = \mathscr{O}(T(n))$.
 \end{definition}
 
@@ -420,7 +420,7 @@ We execute the machine in the ``natural way'' as in the example (not written).
 \end{definition}
 
 Equivalent between machine models prooved by translations between models. Such translations do not preserve $DTime(T(n))$. But 
-all translations are polynomially bounded in space and time. So the class $P$ is invarient under choice of computational model.
+all translations are polynomialy bounded in space and time. So the class $P$ is invarient under choice of computational model.
 
 
 
@@ -450,7 +450,7 @@ NTMs potentially have many different runs from the same starting configuration.
 
 \subsection{NTMs as language recognisers}
 
-Assume input alphabet $\Sigma \subseteq \Gamma \setminus \{\square\}$ and halting states \textbf{accept}, \textbf{reject} $\in \Q$
+Assume input alphabet $\Sigma \subseteq \Gamma \setminus \{\square\}$ and halting states \textbf{accept}, \textbf{reject} $\in \Q$.
 
 An NTM M \textbf{accept}s a word $w \in \Sigma^*$ if there exists a run of M on input $w$ that terminates in \textbf{accept}.
 
@@ -458,8 +458,8 @@ An NTM M \textbf{reject}s a word $w \in \Sigma^*$ if every run of input $w$ term
 
 An NTM M decides the language $L \subseteq \Sigma^*$ if for every $q \in \Sigma^*$:
 \begin{itemize}
-    \item if $w \in L$ then M \textbf{accept}s w
-    \item if $w \notin L$ then M \textbf{reject}s w
+    \item if $w \in L$ then M \textbf{accept}s $w$
+    \item if $w \notin L$ then M \textbf{reject}s $w$
 \end{itemize}
 
 
@@ -501,7 +501,7 @@ Big question is:
     Represent a graph as an adjecent matrix.
     Our input word is 010,101,010;10 (before; is matrix, after; is number of vertices)
 
-    If G has $n$ vertices, then our input size is $m^2 + m + \lfloor log_2 k \rfloor + 1$.
+    If G has $m$ vertices, then our input size is $m^2 + m + \lfloor log_2 k \rfloor + 1$.
 
     We write $\ulcorner$(G, k)$\urcorner$ for the encoding in $\Sigma^*$ representing the input G, k
 
@@ -537,7 +537,7 @@ Big question is:
         \item There is a polynomial $p(n): \N \to \N$ and a polynomial time bounded deterministic TM such that for any input $w \in \Sigma^*$ t.f.a.e.
         \begin{itemize}
             \item[(a)] $w \in L$
-            \item[(b)] there exists certificate $v \in \Sigma^{p(|w|)}$ such that M accepts w, v
+            \item[(b)] there exists certificate $v \in \Sigma^{p(|w|)}$ such that M \textbf{accept}s $w$, $v$.
         \end{itemize}
     \end{enumerate}
 
@@ -585,7 +585,7 @@ A propositional formula is
 \begin{itemize}
     \item a boolean variable: $u, u', u'', u''', u'''', ...$
     \item a truth value: $1$ (true), $0$ (false)
-    \item if $\phi, \psi$ formulas then so are $\phi \cup \psi, \phi \cap \psi, \neg \phi$
+    \item if $\phi, \psi$ formulas then so are $\phi \lor\psi, \phi \land \psi, \neg \phi$
 \end{itemize}
 
 If we assign truth values $\{0, 1\}$ to propositional variables
@@ -594,7 +594,7 @@ If we assign truth values $\{0, 1\}$ to propositional variables
 \end{equation*}
 then we compute $v(\phi)$ using truth tables.
 
-$\phi$ is satisfiable, if there exists an assignment $v:$ variable $\to \{0, 1\}$, such that $v(\phi) = \neg$.
+$\phi$ is satisfiable, if there exists an assignment $v:$ variable $\to \{0, 1\}$, such that $v(\phi) = 1$.
 We call $v$ a satisfying assignment for $\phi$.
 
 \begin{example}
@@ -613,7 +613,7 @@ The SAT problem:
     \item Question: is $\phi$ satisfiable?
 \end{itemize}
 
-We represent SAT as a language over the alphabet $\sigma_{SAT} = \{0, 1, \land, \lor, \neg, u, '\}$
+We represent SAT as a language over the alphabet $\Sigma_{SAT} = \{0, 1, \land, \lor, \neg, u, '\}$
 
 \begin{equation*}
     u \land (u'' \lor u''') \phi
@@ -757,7 +757,7 @@ Suppose $\phi$ has variables up to $u_k$.
 
     Suppose $L \in NP$. We show $L \leq_p SAT$.
 
-    Let M be a single-tape ND TM that decides L with time bound $p(n) \geq time_M(n)$. (p a polynomial).
+    Let M be a single-tape ND TM that decides L with time bound $p(n) \geq time_M(n)$. ($p$ a polynomial).
 
     If we run M on input $w$.
 
@@ -772,7 +772,7 @@ Suppose $\phi$ has variables up to $u_k$.
                                    \iff& w \in L
     \end{align*}
 
-    $\Phi_w$ will use $(p(|w|) + 1) \times |Q| + (p(|w|) + 1) \cdot (2p(|w|) +1) \cdot (|\Gamma| + 1)$ variables. This
+    $\Phi_w$ will use $(p(|w|) + 1) \cdot |Q| + (p(|w|) + 1) \cdot (2p(|w|) +1) \cdot (|\Gamma| + 1)$ variables. This
     is polynomial in $|w|$ $\mathscr{O}((p(n))^2)$.
 
     Mnemonic names for the variables:
@@ -893,7 +893,7 @@ Logaritmic space:
 
 Nondeterministic logaritmic space:
 \begin{equation*}
-    NP = NSpace(\log(n))
+    NL = NSpace(\log(n))
 \end{equation*}
 
 
@@ -958,13 +958,13 @@ EXP $\subseteq$ NEXP is not known to be strict. In fact:
     
     $L' \in NP$
     
-    Take an input v. Deterministically check if it of the form $0^{2^{p(|w)}}, w$ (othervise reject). Then run the nondet.
-    M on input w. This is a polytime nondeterministic machine.
+    Take an input $v$. Deterministically check if it of the form $0^{2^{p(|w)}}, w$ (othervise \textbf{reject}). Then run the nondet.
+    M on input $w$. This is a polytime nondeterministic machine.
     
     $L' \notin P$
     Suppose there is a deterministic TM M' that decides L' in polynomial time $q(n): \N \to \N$.
     
-    We use this to decide L by Given input wl write $0^{2^{p(|w|)}}, w$ onto the tape. Run M' on the above input.
+    We use this to decide $L$ by Given input wl write $0^{2^{p(|w|)}}, w$ onto the tape. Run M' on the above input.
     
     This takes time: $\mathscr{O}(2^{p(|w|)})$ for setting np. $\mathscr{O}(q(c\cdot2^{p(|w|)}))$ for running M'
     $= \mathscr{O}(2^{poly(|w|)})$
@@ -1024,8 +1024,8 @@ Proof idea illustrated using one example.
 
 Input: $\forall u \exists v (u \land v) \lor (\neg u \land \neg v)$
 
-L is PSPACE hard, if for every PSPACE language $L'$ $L' \leq_p L$.
-L is NPSPACE hard, if for every NPSPACE language $L'$ $L' \leq_p L$.
+$L$ is PSPACE hard, if for every PSPACE language $L'$ $L' \leq_p L$.
+$L$ is NPSPACE hard, if for every NPSPACE language $L'$ $L' \leq_p L$.
 
 \begin{theorem}[Meyer $\&$ Stockmeyer 1973]
     TQBF is NPSPACE hard. (hence also PSPACE hard).
@@ -1040,47 +1040,52 @@ Corollary: PSPACE = NPSPACE
     \end{enumerate}
 \end{proof}
 
-Suppose $L$ is decided by a nondeterministic TM M where space is bounded by $p(n)$ polynomial.
 
-For convenience assume that the machine M loops on the \textbf{accept}, and only ever \textbf{accept}s after erasing all data on the working tapes
- and reset head positions.
+\begin{proof}
+    (of Meyer $\&$ Stockmeyer 1973)
 
-We define the configuration graph of M run on an input word w. Vertices are configurations:
-\begin{itemize}
-    \item a state $q \in Q$
-    \item $w$ on the input tape + input tape head position
-    \item $v_1, \dots, v_k \in \Gamma^{p(|w|)}$ representing the relevant data on the K working tape + K head positions. 
-\end{itemize}
-
-Such a configuration $c$ can be encoded by word ``c'' $\in \{0, 1\}^{a \cdot p(|w|)}$
-
-The edges in the graph $c \to c'$ if M can make one step of computation from configuration $c$ to configuration $c'$.
-
-We construct a propositional formula $\Phi_{M, w}(u_1, \dots, u_N, v_1, \dots, v_N)$, where $N = a \cdot p(|w|)$ such that
-\begin{itemize}
-    \item The size of $\Phi_{M, w}$ is $\mathscr{O}(n)$.
-    \item For \overrightarrow{a}, \overrightarrow{b} $\in \{0, 1\}^N$ \dots
+    Suppose $L$ is decided by a nondeterministic TM M where space is bounded by $p(n)$ polynomial.
     
-    $\Phi_{M, w}(\overrightarrow{a}, \overrightarrow{b}) = 1 \iff \overrightarrow{a} = \ulcorner c \urcorner$ and $\overrightarrow{b} = \ulcorner c' \urcorner$ for 2 node $c, c'$ in the configuration graph and $c \to c'$.
-\end{itemize}
-
-The formula $\Phi_{M, w}$ is defined in an analogous why to the formula constructed in the proof of Cook-Levin theorem.
-
-We construct qbformulas $\Psi_i (u_1, \dots, u_N, v_1, \dots, v_N)$. Satisfying
-\begin{itemize}
-    \item The size of $\Psi_i$ is polynomial in N.
-    \item For $c, c'$ in the config graph $\Psi(\ulcorner c \urcorner, \ulcorner c'\urcorner) = 1 \iff $ there is a directed path of length $2^i$ from $c$ to $c'$.
-\end{itemize}
-
-Given this we are done, because the required ptime reduction from $L$ to TQBF is:
-\begin{itemize}
-    \item given the input word $w$, construct $\Psi_{M, w} (\vec{u}, \vec{v})$ as above, and hence $\Psi_N(\vec{u}, \vec{v})$
-    \item Then $\Psi_N (\ulcorner start \urcorner, \ulcorner accept \urcorner) = 1$ \\
-    $\iff$ $\exists$ path of length $2^N$ from start to accept configuration \\
-    $\iff$ $\exists$ path from start to accept configuration \\
-    $\iff$ $w \in L$
-    \item The closed formula $\Psi_N (\ulcorner start \urcorner, \ulcorner accept \urcorner)$ has size polynomial in $N = c \cdot p(|w|)$ hence polynomial in $|w|$
-\end{itemize}
+    For convenience assume that the machine M loops on the \textbf{accept}, and only ever \textbf{accept}s after erasing all data on the working tapes
+     and reset head positions.
+    
+    We define the configuration graph of M run on an input word $w$. Vertices are configurations:
+    \begin{itemize}
+        \item a state $q \in Q$
+        \item $w$ on the input tape + input tape head position
+        \item $v_1, \dots, v_k \in \Gamma^{p(|w|)}$ representing the relevant data on the $k$ working tapes + $k$ head positions. 
+    \end{itemize}
+    
+    Such a configuration $c$ can be encoded by word $\ulcorner c \urcorner \in \{0, 1\}^{c \cdot p(|w|)}$
+    
+    The edges in the graph $c \to c'$ if M can make one step of computation from configuration $c$ to configuration $c'$.
+    
+    We construct a propositional formula $\Phi_{M, w}(u_1, \dots, u_N, v_1, \dots, v_N)$, where $N = c \cdot p(|w|)$ such that
+    \begin{itemize}
+        \item The size of $\Phi_{M, w}$ is $\mathscr{O}(N)$.
+        \item For \overrightarrow{a}, \overrightarrow{b} $\in \{0, 1\}^N$ \dots
+        
+        $\Phi_{M, w}(\overrightarrow{a}, \overrightarrow{b}) = 1 \iff \overrightarrow{a} = \ulcorner c \urcorner$ and $\overrightarrow{b} = \ulcorner c' \urcorner$ for 2 node $c, c'$ in the configuration graph and $c \to c'$.
+    \end{itemize}
+    
+    The formula $\Phi_{M, w}$ is defined in an analogous why to the formula constructed in the proof of Cook-Levin theorem.
+    
+    We construct qbformulas $\Psi_i (u_1, \dots, u_N, v_1, \dots, v_N)$. Satisfying
+    \begin{itemize}
+        \item The size of $\Psi_i$ is polynomial in N.
+        \item For $c, c'$ in the config graph $\Psi(\ulcorner c \urcorner, \ulcorner c'\urcorner) = 1 \iff $ there is a directed path of length $2^i$ from $c$ to $c'$.
+    \end{itemize}
+    
+    Given this we are done, because the required ptime reduction from $L$ to TQBF is:
+    \begin{itemize}
+        \item given the input word $w$, construct $\Psi_{M, w} (\vec{u}, \vec{v})$ as above, and hence $\Psi_N(\vec{u}, \vec{v})$
+        \item Then $\Psi_N (\ulcorner start \urcorner, \ulcorner accept \urcorner) = 1$ \\
+        $\iff$ $\exists$ path of length $2^N$ from start to accept configuration \\
+        $\iff$ $\exists$ path from start to accept configuration \\
+        $\iff$ $w \in L$
+        \item The closed formula $\Psi_N (\ulcorner start \urcorner, \ulcorner accept \urcorner)$ has size polynomial in $N = c \cdot p(|w|)$ hence polynomial in $|w|$
+    \end{itemize}
+\end{proof}
 
 % Preveri, ce smo naredili se kaj
 
@@ -1094,11 +1099,11 @@ Given this we are done, because the required ptime reduction from $L$ to TQBF is
 \section{Logarithmic space}
 Recall:
 \begin{itemize}
-    \item L = DSPACE(log(n))
-    \item NL = NSPACE(log(n))
+    \item $L = DSpace(\log(n))$
+    \item $NL = NSpace(\log(n))$
 \end{itemize}
 
-Two examples in L
+Two examples in $L$
 \begin{gather*}
     DIV3 = \{w \in \{0, 1\}^* | \exists n \in \N \; w = bin(n) \text{ and } 3|n\} \\
     MULT = \{bin(m), bin(n), bin(l) | m, n, l \in \N \text{ and } m \cdot n = l\}
@@ -1106,6 +1111,7 @@ Two examples in L
 
 \subsection{The PATH problem}
 Input: A directed graph $G$ and two vertices $s, t \in G$.
+
 Question: Is there a directed path from $s$ to $t$?
 
 As a language
@@ -1114,7 +1120,7 @@ As a language
     \text{ the binary representation of vertex s, t' the binary representation of vertex t}\}
 \end{gather*}
 
-For a graph G with k vertices such a truple has size $\mathscr{O}(k^2)$.
+For a graph G with $k$ vertices such a truple has size $\mathscr{O}(k^2)$.
 
 Vertices are represented by words of size $\mathscr{O}(\log k)$. This is also $\mathscr{O}(\log n)$ when $n = \mathscr{O}(k^2)$.
 
@@ -1127,25 +1133,27 @@ Proposition: PATH $\in$ NL.
     \begin{itemize}
         \item Use two working tapes (A and B).
         \item Start of algorithm given input $G', s', t'$ 
-        \item Write s' on tape A and $bin(1)$ on tape B.
+        \item Write $s'$ on tape A and $bin(i)$ on tape B.
     \end{itemize}
 
     *: At each step check tape A to see if $t'$ is on tape A => if so \textbf{accept}.
 
-    Check tape B to see if $bin(k)$ (no. of vertices in G) is on B => if so \textbf{accept}.
+    Check tape B to see if $bin(k)$ (no. of vertices in G) is on B => if so \textbf{reject}.
 
     Otherwise consider the vertex $v$ with $bin(v)$ on tape (A).
 
     Nondeterministically choose a vertex $v'$ s.t. $v \to v'$ in G. Write $w''$ on tape A. increment counter on tape B. Go back to *
-
-    We have PATH $\in$ NL.
-
-    We will show PATH is NL-hard. Hence, PATH is NL-complete.
 \end{proof}
+
+\begin{theorem}
+    PATH $\in$ NL.
+\end{theorem}
+
+We will show PATH is NL-hard. Hence, PATH is NL-complete.
 
 L is NL-hard if for every NL language L', we have a deterministic logarithmic space reduction from L' to L.
 
-Reduction uses a TM with read only input tape and write only output tape and k working tapes. We only count the space on working tapes.
+Reduction uses a TM with read only input tape and write only output tape and $k$ working tapes. We only count the space on working tapes.
 
 Notation:
 \begin{equation*}
@@ -1157,25 +1165,25 @@ Notation:
 \end{theorem}
 
 \begin{proof}
-    Suppose L is decided by a nondeterministic k tape TM M, whose space is bounded by $c \cdot log(n)$.
+    Suppose L is decided by a nondeterministic $k$ tape TM M, whose space is bounded by $c \cdot \log(n)$.
 
-    (Assume that M erases its working tapes and resets head position of the input tape before entering the accept state).
+    (Assume that M erases its working tapes and resets head position of the input tape before entering the \textbf{accept} state).
 
     As last week consider the configuration graph of M on an input word $w$. Configurations have:
     \begin{itemize}
-        \item a state $q \in q$
+        \item a state $q \in Q$
         \item $w$ on input tape + head position on input tape
-        \item $v_1, \dots, v_k \in \Gamma^{c \cdot log |w|}$ configurations of working tapes + $k$ head positions.
+        \item $v_1, \dots, v_k \in \Gamma^{c \cdot \log |w|}$ configurations of working tapes + $k$ head positions.
     \end{itemize}
 
-    The space we need to represent an invividual configuration is $\mathscr{O}(log |w|)$. Any configuration $c$ can be represented
-    by $c' \in \{0, 1\}^{a \cdot log|w|}$ for some $a$.
+    The space we need to represent an invividual configuration is $\mathscr{O}(\log |w|)$. Any configuration $c$ can be represented
+    by $c' \in \{0, 1\}^{a \cdot \log|w|}$ for some $a$.
 
     The required logspace reduction $w \to G, s, t$ where:
     \begin{itemize}
-        \item $G$ is the adjacent matrix of the configuration graph of $M$ on $W$
+        \item $G$ is the adjacent matrix of the configuration graph of $M$ on $w$
         \item $s$ is the start configuration
-        \item $t$ is the accept configuration
+        \item $t$ is the \textbf{accept} configuration
     \end{itemize}
 
     This reduction is only logarithmic space by the following algorithm:
@@ -1186,7 +1194,7 @@ Notation:
             \For{$i \in \{0, 1\}^{a \cdot \log |w|}$}
                 \For{$j \in \{0, 1\}^{a \cdot \log |w|}$}
                     \If{$i = c'$ and $j = c'$ and $c \rightarrow c'$}
-                        \State add 1 to the accept tape
+                        \State add 1 to the \textbf{accept} tape
                     \Else
                         \State put 0 otherwise
                     \EndIf
@@ -1225,7 +1233,7 @@ A probabilistic TM is specified by $(Q, \Gamma, \Delta)$, exactly the same data 
 (how we run the machine).
 \begin{itemize}
     \item Start in the start state
-    \item Whenever the machine is in a configuration $(q, t, h)$ and there are $K$ possible transitions to $K$ potential successor configurations, the machine chooses
+    \item Whenever the machine is in a configuration $(q, t, h)$ and there are $k$ possible transitions to $k$ potential successor configurations, the machine chooses
     one of these successors with uniform probability $\frac{1}{k}$.
 \end{itemize}
 
@@ -1402,7 +1410,7 @@ There exists a behaviour of \textbf{P} such that if $G_1 \not \cong G_2$ then $P
 
 \subsection*{Soundness}
 For any \textbf{P} that conforms to the protocol (returns $j \in \{1, 2\}$):
-If $G_1 \cong G_2$ then $P(\textbf{reject}) = \frac{1}{2}$
+If $G_1 \cong G_2$ then $P(\textbf{reject}) = \frac{1}{2}$.
 
 \subsection*{Argument}
 The input to \textbf{P} is a graph uniformly at random from the collection of graphs isomorphic to $G_1$ and $G_2$.
@@ -1440,7 +1448,7 @@ A $k$-round interaction on input word $w \in \Sigma^*$ is ($k$ can depend on $w$
         
         $\exists$ proover that interacts with V such that
         \begin{equation*}
-            \forall w \in L: Pr(Out<v,p,w>=\textbf{accept}) \geq \frac{2}{3}
+            \forall w \in L: Pr(out<v,p,w>=\textbf{accept}) \geq \frac{2}{3}
         \end{equation*}
         \item soundness:
         
@@ -2005,9 +2013,9 @@ Proposition:
 
 Given a function $f: \Sigma^* \to \Sigma^*$
 
-A deterministic TM with an oracle for f is a TM with an additional tape (the oracle tape) and a more general transition (partial) function
+A deterministic TM with an oracle for $f$ is a TM with an additional tape (the oracle tape) and a more general transition (partial) function
 \begin{equation*}
-    \delta: Q + \Gamma^{k+1} \to Q((\Gamma^{k+1} \times \{-1, 0, 1\}^{k+1}) \cup \{call-f\}) % cup = distort union
+    \delta: Q \times \Gamma^{k+1} \to Q((\Gamma^{k+1} \times \{-1, 0, 1\}^{k+1}) \cup \{call-f\}) % cup = distort union
 \end{equation*}
 a transition $(q, a_1, \dots, a_{k+1}) \to (q', call-f)$
 change the state to q' and replace the word $w$ on the oracle tape with the word $f(w)$.
@@ -2021,12 +2029,23 @@ that computes g in polynomial time.
 
 A function $f$ is $\#$P-hard if, for every $g \in \#P, g \in FP^f$.
 
-$f$ is $\#$P-complete if $f \in \#P$ and $f$ is $\#$P-hard.
+$f$ is $\#$P-complete if $f \in \#P$ and $f$ is $\#P$-hard.
 
 \begin{theorem}
     $\#SAT$ is $\#P$-complete.
 \end{theorem}
-(no proof)
+
+\begin{proof}
+    (idea):
+
+    We already know $\#SAT \in \#P$. For $\#P$-hardness, suppose $H: \Sigma^* \to \N \in \#P$.
+    Thus $g(w) = |\{v \in \Sigma^* | M(w, v) \text{ \textbf{accept}s}\}|$. The proof of the Cook-Levin theorem
+    (adjusted to the certificate definition of $NP$) gives a polytime function $\Gamma: \Sigma^* \to \Sigma_{PROP}^*$ such that
+    $\forall w \in \Sigma^*$ there is a $1-1$-correspondence between $\{v \in \Sigma^* | M(w, v) \text{ \textbf{accept}s}\}$ and
+    satisfying assignments of $\Gamma(w)$. So the following oracle algorithm shows that $g \in FP^{\#SAT}$:
+
+    Given input $w$ compute $\Gamma(w)$ and write result on the oracle tape. Call $\#SAT$ oracle on oracle tape.
+\end{proof}
 
 
 
@@ -2108,7 +2127,8 @@ I.e. $Det \in FP$
 
 In contrast.
 
-\begin{theorem}
+% Valiant ?
+\begin{theorem}(Validant)
     Computing the permanent of a $\{0, 1\}$-matrix is $\#$P-complete.
 \end{theorem}
 
@@ -2119,7 +2139,7 @@ A word about problems:
     \item The decision problem: ``given $B$ and $N$ does $B$ have $N$ perfect matchings'' is in PSPACE and has a nice IP.
 \end{itemize}
 
-If $perm$ is in FP then P = NP.
+If $perm$ is in FP then $P = NP$.
 
 \begin{theorem}
     (Toda)
